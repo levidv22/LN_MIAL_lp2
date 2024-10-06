@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:insert="~{admin/he_fo_ad::head}"></head>
+    <body class="d-flex flex-column min-vh-100"> <!-- flex y min-vh-100 para que el body ocupe toda la altura -->
+        <div th:insert="~{admin/he_fo_ad::header}"></div>
+
+        <main class="flex-grow-1">
+            <div class="container mt-5 my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <h4 class="text-center">Productos Existentes</h4>
+                        <br>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre y Apellidos</th>
+                                        <th>Correo Electrónico</th>
+                                        <th>N° Celular</th>
+                                        <th>Contraseña</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="user : ${users}">
+                                        <td th:text="${user.username}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td th:text="${user.cellphone}"></td>
+                                        <td th:text="${user.password}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:insert="~{admin/he_fo_ad::footer}"></div>
+    </body>
+</html>

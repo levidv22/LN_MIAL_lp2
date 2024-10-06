@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:insert="~{he_fo_us::head}"></head>
+    <body class="d-flex flex-column min-vh-100">
+        <div th:insert="~{he_fo_us::header}"></div>
+
+        <main class="flex-grow-1">
+            <div class="container mt-5 my-5">
+                <h4 class="text-center">Detalle de Envío</h4>
+                <br>
+                <!-- Mensaje de error si no existen detalles del envío -->
+                <div th:if="${envio == null}" class="alert alert-warning text-center" role="alert">
+                    El administrador aún no ingresa los datos del envío para este pedido, 
+                    en breves momentos se ingresará los datos.
+                </div>
+                <div th:if="${envio != null}">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Método de Envío</th>
+                                    <th>Fecha de Envío</th>
+                                    <th>Fecha Estimada de Entrega</th>
+                                    <th>Estado del Envío</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td th:text="${envio.shippingMethod}"></td>
+                                    <td th:text="${shippingDateFormatted}"></td>
+                                    <td th:text="${estimatedDeliveryDateFormatted}"></td>
+                                    <td th:text="${envio.shippingStatus}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:insert="~{he_fo_us::footer}"></div>
+    </body>
+</html>
