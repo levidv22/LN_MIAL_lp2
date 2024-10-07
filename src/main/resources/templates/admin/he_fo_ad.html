@@ -41,7 +41,7 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto me-2">
                         <li th:if="${session.username != null}" class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-regular fa-user"></i> [[${session.username}]]
@@ -57,10 +57,14 @@
                             <a class="nav-link" th:href="@{/login}">Iniciar Sesión</a>
                         </li>
                     </ul>
-                    <form class="navbar-nav ms-auto" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </form>
+                    <ul class="navbar-nav ms-auto">
+                        <li th:if="${session.username != null}">
+                            <form class="navbar-nav ms-auto me-2" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
