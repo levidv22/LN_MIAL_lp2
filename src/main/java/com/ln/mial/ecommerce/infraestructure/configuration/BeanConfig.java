@@ -49,11 +49,6 @@ public class BeanConfig {
     }
 
     @Bean
-    public CalificacionProductosService reviewService(CalificacionProductosRepository reviewRepository) {
-        return new CalificacionProductosService(reviewRepository);
-    }
-
-    @Bean
     public AlmacenService stockService(AlmacenRepository stockRepository) {
         return new AlmacenService(stockRepository);
     }
