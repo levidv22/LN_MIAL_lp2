@@ -3,6 +3,7 @@ package com.ln.mial.ecommerce.infraestructure.controller;
 import com.ln.mial.ecommerce.infraestructure.entity.AlmacenEntity;
 import java.util.List;
 import com.ln.mial.ecommerce.app.service.AlmacenService;
+import com.ln.mial.ecommerce.app.service.ProductosService;
 import com.ln.mial.ecommerce.app.service.ValidateStock;
 import com.ln.mial.ecommerce.infraestructure.entity.ProductosEntity;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,12 @@ public class AlmacenController {
 
     private final AlmacenService stockService;
     private final ValidateStock validateStock;
-
-    public AlmacenController(AlmacenService stockService, ValidateStock validateStock) {
+    private final ProductosService productService;
+    
+    public AlmacenController(AlmacenService stockService, ValidateStock validateStock, ProductosService productService) {
         this.stockService = stockService;
         this.validateStock = validateStock;
+        this.productService = productService;
     }
 
     @GetMapping("/{id}")
@@ -53,12 +56,6 @@ public class AlmacenController {
             stockService.saveStock(validateStock.calculateBalance(stock));
         }
 
-        return "redirect:/admin/products";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Integer id) {
-        stockService.deleteStockById(id);
         return "redirect:/admin/products";
     }
 }

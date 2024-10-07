@@ -6,6 +6,7 @@ import com.ln.mial.ecommerce.infraestructure.entity.UsuariosEntity;
 import org.springframework.stereotype.Repository;
 import com.ln.mial.ecommerce.app.repository.ProductosRepository;
 import com.ln.mial.ecommerce.infraestructure.entity.CategoriasEntity;
+import java.util.List;
 
 @Repository
 public class ProductosRepositoryImpl implements ProductosRepository {
@@ -16,8 +17,8 @@ public class ProductosRepositoryImpl implements ProductosRepository {
     }
 
     @Override
-    public Iterable<ProductosEntity> getProducts() {
-        return productCrudRepository.findAll();
+    public List<ProductosEntity> getProducts() {
+        return (List<ProductosEntity>) productCrudRepository.findAll();
     }
 
     @Override

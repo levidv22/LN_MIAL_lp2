@@ -16,13 +16,11 @@ public class AdminFormController {
 
     private final ProductosService productService;
     private final CategoriasService categoriasService;
-    private final AlmacenService almacenService;
     private final Logger log = LoggerFactory.getLogger(AdminFormController.class);
 
-    public AdminFormController(ProductosService productService, CategoriasService categoriasService, AlmacenService almacenService) {
+    public AdminFormController(ProductosService productService, CategoriasService categoriasService) {
         this.productService = productService;
         this.categoriasService = categoriasService;
-        this.almacenService = almacenService;
     }
 
     @GetMapping

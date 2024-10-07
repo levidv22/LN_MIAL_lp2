@@ -23,7 +23,7 @@ public class AdminProController {
 
     @GetMapping
     public String showProducts(Model model) {
-        Iterable<ProductosEntity> products = productService.getProducts();
+        List<ProductosEntity> products = productService.getProducts();
 
         for (ProductosEntity product : products) {
             List<AlmacenEntity> stockList = almacenService.getStockByProductEntity(product);
@@ -35,6 +35,7 @@ public class AdminProController {
             }
         }
 
+        Collections.reverse(products);
         model.addAttribute("products", products);
         return "admin/productos";
     }

@@ -8,6 +8,7 @@ import com.ln.mial.ecommerce.infraestructure.entity.UsuariosEntity;
 import org.springframework.web.multipart.MultipartFile;
 import com.ln.mial.ecommerce.app.repository.ProductosRepository;
 import com.ln.mial.ecommerce.infraestructure.entity.CategoriasEntity;
+import java.util.List;
 
 public class ProductosService {
 
@@ -19,7 +20,7 @@ public class ProductosService {
         this.uploadFile = uploadFile;
     }
 
-    public Iterable<ProductosEntity> getProducts() {
+    public List<ProductosEntity> getProducts() {
         return productRepository.getProducts();
     }
 
