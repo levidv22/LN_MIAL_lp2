@@ -7,7 +7,6 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import java.math.*;
-import java.time.*;
 import java.util.List;
 import com.ln.mial.ecommerce.app.service.AlmacenService;
 import org.springframework.web.servlet.mvc.support.*;
@@ -18,13 +17,11 @@ public class PedidoController {
 
     private final PedidosService pedidosService;
     private final DetallePedidosService detallePedidosService;
-    private final ProductosService productosService;
     private final AlmacenService almacenService;
 
-    public PedidoController(PedidosService pedidosService, DetallePedidosService detallePedidosService, ProductosService productosService, AlmacenService almacenService) {
+    public PedidoController(PedidosService pedidosService, DetallePedidosService detallePedidosService, AlmacenService almacenService) {
         this.pedidosService = pedidosService;
         this.detallePedidosService = detallePedidosService;
-        this.productosService = productosService;
         this.almacenService = almacenService;
     }
 
@@ -53,36 +50,6 @@ public class PedidoController {
         return "carrito";
     }
 
-    @PostMapping("/add")
-    public String addToCart(@RequestParam("productId") Integer productId,
-            @RequestParam("quantity") Integer quantity,
-            HttpSession session) {
-        UsuariosEntity user = (UsuariosEntity) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
-        if (order == null || order.getStatusPedido() == StatusPedido.PAGADO) {
-            order = new PedidosEntity();
-            order.setOrderDate(LocalDateTime.now());
-            order.setStatusPedido(StatusPedido.EN_PROCESO); // Estado inicial del pedido
-            order.setUser(user);
-            order = pedidosService.saveOrder(order);
-            session.setAttribute("currentOrder", order);
-        }
-
-        ProductosEntity product = productosService.getProductById(productId);
-        DetallePedidosEntity orderDetail = new DetallePedidosEntity();
-        orderDetail.setProduct(product);
-        orderDetail.setQuantity(quantity);
-        orderDetail.setPrice(product.getPrice());
-        orderDetail.setOrder(order);
-        detallePedidosService.saveOrderDetail(orderDetail);
-
-        return "redirect:/carrito";
-    }
-
     @PostMapping("/checkout")
     public String checkout(HttpSession session) {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
@@ -99,7 +66,7 @@ public class PedidoController {
     public int getCartItemCount(HttpSession session) {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
         if (order == null || order.getStatusPedido() == StatusPedido.PAGADO) {
-            return 0; // Si no hay productos o el pedido fue enviado, la cantidad es 0
+            return 0; // Si no hay productos o el pedido fue pagado, la cantidad es 0
         }
 
         List<DetallePedidosEntity> orderDetails = detallePedidosService.getOrderDetailsByOrder(order);

@@ -87,7 +87,7 @@ public class DetallePedidosController {
 
             // Crear o actualizar el pedido
             PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
-            if (order == null || order.getStatusPedido() == StatusPedido.ENVIADO) {
+            if (order == null) {
                 order = new PedidosEntity();
                 order.setOrderDate(LocalDateTime.now());
                 order.setStatusPedido(StatusPedido.EN_PROCESO);
