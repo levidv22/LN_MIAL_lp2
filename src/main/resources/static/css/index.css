@@ -37,21 +37,6 @@
 .titulo a:hover::after {
     width: 100%;
 }
-/* Establecer una altura fija para el contenedor de la imagen */
-.image1-container {
-    height: 200px; /* Ajusta la altura según tu diseño */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-/* Asegurarse de que las imágenes se ajusten correctamente al contenedor */
-.image1-container img {
-    height: 100%;
-    width: auto;
-    object-fit: cover;
-}
 
 /* Establecer una altura fija para el contenedor de la imagen */
 .image2-container {
@@ -83,13 +68,6 @@ h3.text-success {
     font-size: 2rem; /* Precio más grande */
     color: #28a745; /* Color verde */
 }
-
-/* Estilos del botón */
-.btn-lg {
-    padding: 10px 20px;
-    font-size: 1.2rem;
-}
-
 
 /* Asegurarse de que las imágenes se ajusten correctamente al contenedor */
 .image2-container img {
@@ -175,3 +153,104 @@ h3.text-success {
     transition: 0.5s;
 }
 
+
+
+
+
+
+
+/* Estilos personalizados para las tarjetas de productos */
+.card {
+    border: none; /* Sin borde para un diseño más limpio */
+    border-radius: 20px; /* Bordes redondeados */
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para profundidad */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave al hacer hover */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Elevar la tarjeta ligeramente al hacer hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumentar la sombra para mayor efecto */
+}
+
+.card img {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 100%;
+    height: 250px; /* Tamaño consistente de las imágenes */
+    object-fit: cover; /* Ajuste perfecto para mantener la proporción de la imagen */
+    transition: transform 0.3s ease; /* Transición suave para la imagen */
+}
+
+.card:hover img {
+    transform: scale(1.05); /* Pequeña ampliación de la imagen al hacer hover */
+}
+
+/* Estilo del título y precio */
+.card-body {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa; /* Fondo claro para contraste */
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #343a40; /* Color oscuro para destacar el nombre del producto */
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.card-title:hover {
+    color: #e63946; /* Cambio de color al hacer hover */
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #28a745; /* Color verde para el precio */
+    font-weight: bold;
+}
+
+/* Efectos de transición suaves en los enlaces */
+a.no-underline:hover {
+    color: #e63946; /* Efecto hover para los enlaces */
+}
+
+/* Contenedor de la imagen ajustado para una mejor presentación */
+.image1-container {
+    height: 250px; /* Asegurar una altura uniforme para las imágenes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.image1-container img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+
+/* Botones personalizados */
+.btn-lg {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-lg:hover {
+    background-color: #218838;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 20px; /* Espacio entre las tarjetas en pantallas más pequeñas */
+    }
+
+    .card img {
+        height: 200px; /* Ajustar la altura de la imagen en móviles */
+    }
+}
