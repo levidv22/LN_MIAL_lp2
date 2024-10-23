@@ -10,8 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-import com.ln.mial.ecommerce.infraestructure.dto.PedidoAgrupadoDTO;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,19 +43,24 @@ public class HistorialComprasController {
         // Obtener los pedidos pagados (PAGADO) del usuario
         List<PedidosEntity> paidOrders = pedidosService.getOrdersByUserAndStatus(user, StatusPedido.PAGADO);
 
-        // Crear una lista para los detalles agrupados por pedido
-        List<PedidoAgrupadoDTO> pedidosAgrupados = new ArrayList<>();
+        // Crear una lista para almacenar los datos necesarios
+        List<Map<String, Object>> pedidosAgrupados = new ArrayList<>();
 
         for (PedidosEntity order : paidOrders) {
+            // Obtener detalles del pedido
             List<DetallePedidosEntity> orderDetails = detallePedidosService.getOrderDetailsByOrder(order);
+            // Obtener el pago asociado al pedido
             PagosEntity payment = pagosService.getPaymentsByOrder(order).stream().findFirst().orElse(null);
 
-            PedidoAgrupadoDTO pedidoAgrupado = new PedidoAgrupadoDTO();
-            pedidoAgrupado.setUsername(order.getUser().getUsername());  // Aunque aquí solo es un usuario
-            pedidoAgrupado.setDetallesPedido(orderDetails);
-            pedidoAgrupado.setTotalAmount(order.getTotalAmount());
-            pedidoAgrupado.setImagenPago(payment != null ? payment.getImagePago() : null);
+            // Crear un mapa para agrupar los detalles de cada pedido
+            Map<String, Object> pedidoAgrupado = new HashMap<>();
+            pedidoAgrupado.put("username", order.getUser().getUsername()); // Nombre de usuario
+            pedidoAgrupado.put("detallesPedido", orderDetails); // Detalles del pedido
+            pedidoAgrupado.put("totalAmount", order.getTotalAmount()); // Monto total del pedido
+            pedidoAgrupado.put("shippingAddress", order.getShippingAddress()); // Dirección de envío
+            pedidoAgrupado.put("imagenPago", payment != null ? payment.getImagePago() : null); // Imagen de pago si existe
 
+            // Añadir el mapa a la lista de pedidos agrupados
             pedidosAgrupados.add(pedidoAgrupado);
         }
 

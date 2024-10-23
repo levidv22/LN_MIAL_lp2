@@ -1,6 +1,5 @@
 package com.ln.mial.ecommerce.infraestructure.controller;
 
-import com.ln.mial.ecommerce.infraestructure.dto.*;
 import com.ln.mial.ecommerce.app.service.*;
 import com.ln.mial.ecommerce.infraestructure.entity.*;
 import java.time.LocalDateTime;
@@ -31,22 +30,27 @@ public class AdminComController {
 
     @GetMapping
     public String showCompras(Model model) {
+        // Obtener todos los pedidos con estado PAGADO
         List<PedidosEntity> allPaidOrders = pedidosService.getOrdersByStatus(StatusPedido.PAGADO);
 
-        // Crear una lista para los detalles agrupados por pedido
-        List<PedidoAgrupadoDTO> pedidosAgrupados = new ArrayList<>();
+        // Crear una lista para almacenar los datos necesarios
+        List<Map<String, Object>> pedidosAgrupados = new ArrayList<>();
 
         for (PedidosEntity order : allPaidOrders) {
+            // Obtener detalles del pedido
             List<DetallePedidosEntity> orderDetails = detallePedidosService.getOrderDetailsByOrder(order);
+            // Obtener el pago asociado al pedido
             PagosEntity payment = pagosService.getPaymentsByOrder(order).stream().findFirst().orElse(null);
 
-            PedidoAgrupadoDTO pedidoAgrupado = new PedidoAgrupadoDTO();
-            pedidoAgrupado.setUsername(order.getUser().getUsername());
-            pedidoAgrupado.setDetallesPedido(orderDetails);
-            pedidoAgrupado.setShippingAddress(order.getShippingAddress());
-            pedidoAgrupado.setTotalAmount(order.getTotalAmount());
-            pedidoAgrupado.setImagenPago(payment != null ? payment.getImagePago() : null);
+            // Crear un mapa para agrupar los detalles de cada pedido
+            Map<String, Object> pedidoAgrupado = new HashMap<>();
+            pedidoAgrupado.put("username", order.getUser().getUsername()); // Nombre de usuario
+            pedidoAgrupado.put("detallesPedido", orderDetails); // Detalles del pedido
+            pedidoAgrupado.put("shippingAddress", order.getShippingAddress()); // Dirección de envío
+            pedidoAgrupado.put("totalAmount", order.getTotalAmount()); // Monto total del pedido
+            pedidoAgrupado.put("imagenPago", payment != null ? payment.getImagePago() : null); // Imagen de pago si existe
 
+            // Añadir el mapa a la lista de pedidos agrupados
             pedidosAgrupados.add(pedidoAgrupado);
         }
 
@@ -55,7 +59,8 @@ public class AdminComController {
 
         // Añadir los detalles agrupados al modelo
         model.addAttribute("pedidosAgrupados", pedidosAgrupados);
-        return "admin/compras";
+
+        return "admin/compras"; // Vista donde mostrar las compras agrupadas para el admin
     }
 
     // Mostrar vista para agregar el envío
@@ -74,7 +79,7 @@ public class AdminComController {
             model.addAttribute("shippingDateFormatted", envio.getShippingDate().format(formatter));
             model.addAttribute("estimatedDeliveryDateFormatted", envio.getEstimatedDeliveryDate().format(formatter));
         }
-        
+
         model.addAttribute("pedido", pedido);
         model.addAttribute("envio", envio);
         return "admin/agregar-envio"; // Vista para agregar envío
