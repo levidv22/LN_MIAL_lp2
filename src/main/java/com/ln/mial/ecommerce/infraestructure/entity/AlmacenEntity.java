@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "almacen")
 public class AlmacenEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,6 +13,7 @@ public class AlmacenEntity {
     private Integer entradas;
     private Integer salidas = 0;
     private Integer balance;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductosEntity productosEntity;
@@ -75,7 +77,5 @@ public class AlmacenEntity {
     public void setProductosEntity(ProductosEntity productosEntity) {
         this.productosEntity = productosEntity;
     }
-    
-    
-}
 
+}

@@ -1,12 +1,13 @@
 package com.ln.mial.ecommerce.infraestructure.adapter;
 
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import com.ln.mial.ecommerce.infraestructure.entity.ProductosEntity;
 import com.ln.mial.ecommerce.infraestructure.entity.UsuariosEntity;
 import org.springframework.stereotype.Repository;
 import com.ln.mial.ecommerce.app.repository.ProductosRepository;
 import com.ln.mial.ecommerce.infraestructure.entity.CategoriasEntity;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class ProductosRepositoryImpl implements ProductosRepository {

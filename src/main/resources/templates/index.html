@@ -5,7 +5,7 @@
         <div th:insert="~{he_fo_us::header}"></div>
 
         <!-- Contenido Principal -->
-        <main class="flex-grow-1">
+        <main class="flex-grow-1 content">
             <div class="container mt-5 my-5">
                 <div class="row">
                     <div class="col-12 text-center">
@@ -18,7 +18,7 @@
                                 <div class="image1-container">
                                     <img th:src="@{/images/{image}(image=${product.image})}" class="card-img-top" alt="Imagen del producto"
                                          th:if="${product.image != null}"/>
-                                    <img src="/images/default.png" class="card-img-top" alt="Imagen del producto" th:if="${product.image == null}"/>
+                                    <img th:src="@{/images/default.png}" class="card-img-top" alt="Imagen del producto" th:if="${product.image == null}"/>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-title"><strong>[[${product.name}]]</strong></p>

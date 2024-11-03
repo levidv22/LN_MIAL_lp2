@@ -4,7 +4,7 @@
     <body class="d-flex flex-column min-vh-100">
         <div th:insert="~{he_fo_us::header}"></div>
 
-        <main class="flex-grow-1">
+        <main class="flex-grow-1 content">
             <div class="container mt-5 my-5">
                 <div class="row">
                     <div class="col-md-6 image2-container">
@@ -27,7 +27,7 @@
                         </div>
 
 
-                        <form action="/order-details/add" method="post">
+                        <form th:action="@{/order-details/add}" method="post">
                             <input type="hidden" name="productId" th:value="${product.id}">
                             <label for="quantity">Cantidad:</label>
                             <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" style="width: 100px;">
@@ -40,30 +40,9 @@
                             </ul>
                             <ul style="list-style: none;">
                                 <li th:if="${session.username == null}">
-                                    <button type="button" class="btn btn-primary btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#alertModal">
-                                        <i class="fas fa-shopping-cart"></i>Añadir al Carrito
+                                    <button type="button" class="btn btn-primary btn-lg mt-3" onclick="showAlert()">
+                                        <i class="fas fa-shopping-cart"></i> Añadir al Carrito
                                     </button>
-
-                                    <!-- Modal de Alerta -->
-                                    <div class="modal fade custom-modal" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <i class="fas fa-exclamation-triangle alert-icon"></i>
-                                                    <h5 class="mb-3">¡Necesitas Iniciar Sesión!</h5>
-                                                    <p class="mb-4">Para añadir productos al carrito, por favor inicia sesión en tu cuenta.</p>
-                                                    <div class="d-flex justify-content-center gap-3">
-                                                        <button type="button" class="btn btn-custom btn-login" onclick="location.href = '/login'">
-                                                            Iniciar Sesión
-                                                        </button>
-                                                        <button type="button" class="btn btn-custom btn-close-modal" data-bs-dismiss="modal">
-                                                            Cerrar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </li>
                             </ul>
                         </form>
@@ -73,4 +52,23 @@
         </main>
         <div th:insert="~{he_fo_us::footer}"></div>
     </body>
+    <script>
+        function showAlert() {
+            Swal.fire({
+                icon: 'warning',
+                title: '¡Necesitas Iniciar Sesión!',
+                text: 'Para añadir productos al carrito, por favor inicia sesión en tu cuenta.',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iniciar Sesión',
+                cancelButtonText: 'Cerrar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirigir al usuario a la página de inicio de sesión
+                    window.location.href = '/login';
+                }
+            });
+        }
+    </script>
 </html>

@@ -23,6 +23,9 @@ public class BeanConfig {
         return new UploadFile();
     }
 
+    // @Bean permite a Spring gestionar el ciclo de vida y las 
+    // dependencias de CategoriasService, facilitando la inyección 
+    // y la reutilización de este servicio en toda tu aplicación.
     @Bean
     public CategoriasService categoryService(CategoriasRepository categoryRepository) {
         return new CategoriasService(categoryRepository);

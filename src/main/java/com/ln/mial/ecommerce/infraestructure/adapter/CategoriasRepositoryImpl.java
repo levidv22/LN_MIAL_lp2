@@ -13,9 +13,9 @@ public class CategoriasRepositoryImpl implements CategoriasRepository {
         this.categoryCrudRepository = categoryCrudRepository;
     }
 
-    @Override
+    @Override //sirve para sobreescribir los metodos ya existentes en la interfaz CategoriasRepository
     public Iterable<CategoriasEntity> getCategories() {
-        return categoryCrudRepository.findAll();
+        return categoryCrudRepository.findAll();//métodos listos para usar que simplifican el acceso a la base de datos
     }
 
     @Override

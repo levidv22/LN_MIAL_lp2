@@ -6,7 +6,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@Controller //conectan directamente con las vista HTML
 @RequestMapping("/admin/categories")
 public class CategoriaController {
 
@@ -16,10 +16,10 @@ public class CategoriaController {
         this.categoriasService = categoriasService;
     }
 
-    @GetMapping
+    @GetMapping//Mostrar la vista y el contenido
     public String showCategories(Model model) {
         model.addAttribute("categories", categoriasService.getCategories());
-        return "admin/products";
+        return "admin/formulario";
     }
 
     @PostMapping

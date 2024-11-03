@@ -6,7 +6,7 @@ import com.ln.mial.ecommerce.app.repository.CategoriasRepository;
 public class CategoriasService {
     private final CategoriasRepository categoryRepository;
     
-    //se conecta con el repository y permite que se pueda guardar, eliminar y editar
+    //es un puente de todos los metodos del repository hacia el controller
 
     public CategoriasService(CategoriasRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
