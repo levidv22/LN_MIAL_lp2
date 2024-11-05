@@ -64,7 +64,7 @@ public class ProductosService {
     public Iterable<ProductosEntity> getProductsByCategory(Integer categoryId) {
         CategoriasEntity category = new CategoriasEntity();
         category.setId(categoryId);
-        return productRepository.findByCategory(category); // Assuming you have this in the repository
+        return productRepository.findByCategory(category);
     }
 
     public boolean deleteProductById(Integer id) {

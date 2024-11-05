@@ -15,9 +15,9 @@ private final AlmacenCrudRepository stockCrudRepository;
         this.stockCrudRepository = stockCrudRepository;
     }
 
-    @Override
+    @Override //sirve para sobreescribir los metodos ya existentes en la interfaz CategoriasRepository
     public AlmacenEntity saveStock(AlmacenEntity stockEntity) {
-        return stockCrudRepository.save(stockEntity);
+        return stockCrudRepository.save(stockEntity); //métodos listos para usar que simplifican el acceso a la base de datos
     }
 
     @Override

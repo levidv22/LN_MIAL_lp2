@@ -49,17 +49,17 @@
 
 
 
-.navbar-fixed {
+/*.navbar-fixed {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Asegura que el header esté sobre el contenido */
+    z-index: 1000;  Asegura que el header esté sobre el contenido 
 }
 
-/* Añadir margen al contenido para evitar que el header lo cubra */
+ Añadir margen al contenido para evitar que el header lo cubra 
 .content {
-    margin-top: 120px; /* Ajusta este valor al alto del header */
-}
+    margin-top: 120px;  Ajusta este valor al alto del header 
+}*/
 
 
 
@@ -246,7 +246,7 @@ a.no-underline:hover {
 
 /* Efecto de animación en hover */
 .category-menu .category-link:hover {
-    background-color: #FFD1D1; /* Color de fondo en hover */
+    background-color: #F99AAA; /* Color de fondo en hover */
     color: #ff5e5e; /* Color de texto en hover */
     transform: scale(1.1); /* Aumenta el tamaño ligeramente */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Sombra suave */
@@ -329,30 +329,57 @@ a.no-underline:hover {
 
 
 
-    .navbar-brand {
-        position: relative; /* Para posicionar elementos internos */
-        display: inline-block; /* Asegura que el logo se comporte como un bloque */
-    }
+.navbar-brand {
+    position: relative; /* Para posicionar elementos internos */
+    display: inline-block; /* Asegura que el logo se comporte como un bloque */
+}
 
-    .img-logo {
-        transition: transform 0.3s ease, filter 0.3s ease; /* Transiciones suaves para efectos */
-    }
+.img-logo {
+    transition: transform 0.3s ease, filter 0.3s ease; /* Transiciones suaves para efectos */
+}
 
-    /* Efecto de aumento al pasar el mouse */
-    .navbar-brand:hover .img-logo {
-        transform: scale(1.1); /* Aumenta el tamaño ligeramente */
-        filter: brightness(1.1); /* Aumenta el brillo */
-    }
+/* Efecto de aumento al pasar el mouse */
+.navbar-brand:hover .img-logo {
+    transform: scale(1.1); /* Aumenta el tamaño ligeramente */
+    filter: brightness(1.1); /* Aumenta el brillo */
+}
 
-    .navbar-brand:hover::after {
-        opacity: 1; /* Muestra el brillo al pasar el mouse */
-    }
+.navbar-brand:hover::after {
+    opacity: 1; /* Muestra el brillo al pasar el mouse */
+}
 
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+/* Parallax background */
+.parallax-section {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+}
+/* Custom styles */
+.content-section {
+    padding: 50px 0;
+    text-align: center;
+    background-color: #EEE8F0;
+}
+.btn-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    font-size: 24px;
+    padding: 15px;
+    border-radius: 50%;
+    text-align: center;
+    z-index: 100;
+}
+.object-fit-cover {
+    object-fit: cover;
+}

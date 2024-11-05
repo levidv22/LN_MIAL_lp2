@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head th:insert="~{he_fo_us::head}">
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+        <div th:insert="~{he_fo_us::header}"></div>
+
+        <!-- Contenido Principal -->
+        <main class="flex-grow-1">
+            <!-- Parallax Section with Image -->
+            <section class="parallax-section" style="background-image: url('../img/fondo1.jpeg');"></section>
+
+            <!-- Section with text and button -->
+            <section class="content-section">
+                <div class="container">
+                    <h2>Tu Enunciado Aquí</h2>
+                    <p class="lead">Texto explicativo o contenido relevante que desees mostrar en esta sección.</p>
+                    <a th:href="@{/index/products}" class="btn btn-primary">Ver Productos</a>
+                </div>
+            </section>
+
+            <!-- Section with two images split equally -->
+            <section class="d-flex">
+                <div class="col-6 d-flex align-items-center justify-content-center overflow-hidden" style="height: 80vh;">
+                    <img th:src="@{img/fondo2.jpeg}" class="w-100 h-100 object-fit-cover" alt="Imagen 1">
+                </div>
+                <div class="col-6 d-flex align-items-center justify-content-center overflow-hidden" style="height: 80vh;">
+                    <img th:src="@{img/fondo3.jpeg}" class="w-100 h-100 object-fit-cover" alt="Imagen 2">
+                </div>
+            </section>
+
+
+            <!-- Final section with text -->
+            <section class="content-section">
+                <div class="container">
+                    <h2>Otra Sección de Texto</h2>
+                    <p class="lead">Puedes agregar más contenido o enunciados aquí para complementar la información de la página.</p>
+                </div>
+            </section>
+        </main>
+        <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
+            <i class="fab fa-whatsapp" alt="Contactar por WhatsApp"></i>
+        </a>
+        <div th:insert="~{he_fo_us::footer}"></div>
+    </body>
+</html>

@@ -37,7 +37,7 @@ public class UsuarioController {
         return showProductsByCategoryInternal(id, model);
     }
 
-// Método privado para reutilizar la lógica al mostrar productos por categoría
+//  mostrar productos por categoría
     private String showProductsByCategoryInternal(Integer categoryId, Model model) {
         // Obtener productos por categoría
         Iterable<ProductosEntity> products = productService.getProductsByCategory(categoryId);

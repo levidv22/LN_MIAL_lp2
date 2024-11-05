@@ -48,7 +48,7 @@ public class BeanConfig {
 
     @Bean
     public EnviosService shippingService(EnviosRepository shippingRepository) {
-        return new EnviosService(shippingRepository);
+        return new EnviosService(shippingRepository);//hace que sea funcionable el service y el repository
     }
 
     @Bean
@@ -60,5 +60,4 @@ public class BeanConfig {
     public ValidateStock validateStock(AlmacenService stockService) {
         return new ValidateStock(stockService);
     }
-
 }

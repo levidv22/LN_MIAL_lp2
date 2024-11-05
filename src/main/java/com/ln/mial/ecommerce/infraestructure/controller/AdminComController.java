@@ -65,15 +65,12 @@ public class AdminComController {
 
     // Mostrar vista para agregar el envío
     @GetMapping("/envio/{pedidoId}")
-    public String showShippingForm(@PathVariable Integer pedidoId, Model model) {
+    public String showShippingForm(@PathVariable Integer pedidoId, Model model) {//poniendo las variables que se utilizará
         PedidosEntity pedido = pedidosService.getOrderById(pedidoId);
-        if (pedido == null) {
-            return "redirect:/admin/compras"; // Redirigir si el pedido no existe
-        }
 
-        EnviosEntity envio = enviosService.getShippingByOrder(pedido).stream().findFirst().orElse(null);
 
-        // Formatear fechas si existe un envío
+        EnviosEntity envio = enviosService.getShippingByOrder(pedido).stream().findFirst().orElse(null); // envios no nulo
+
         if (envio != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             model.addAttribute("shippingDateFormatted", envio.getShippingDate().format(formatter));
@@ -96,11 +93,7 @@ public class AdminComController {
 
         try {
             PedidosEntity pedido = pedidosService.getOrderById(pedidoId);
-            if (pedido == null) {
-                return "redirect:/admin/compras";
-            }
 
-            // Parsear fechas de envío y entrega
             LocalDateTime parsedShippingDate = LocalDateTime.parse(shippingDate);
             LocalDateTime parsedEstimatedDeliveryDate = LocalDateTime.parse(estimatedDeliveryDate);
 

@@ -12,6 +12,8 @@ public class AlmacenService {
     public AlmacenService(AlmacenRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
+    
+    //es un puente de todos los metodos del repository que conectan con el controller
 
     public AlmacenEntity saveStock(AlmacenEntity stockEntity) {
         return stockRepository.saveStock(stockEntity);

@@ -7,9 +7,6 @@ public class UsuariosService {
     //Intancia del user repository
     private final UsuariosRepository userRepository;
 
-    public Iterable<UsuariosEntity> getUsers() {
-        return userRepository.getUsers();
-    }
     
     //constructor
     public UsuariosService(UsuariosRepository userRepository) {
@@ -17,6 +14,11 @@ public class UsuariosService {
     }
     
     //metodos
+    
+    public Iterable<UsuariosEntity> getUsers() {
+        return userRepository.getUsers();
+    }
+        
     public UsuariosEntity createUser(UsuariosEntity userEntity) {
         return userRepository.createUser(userEntity);
     }

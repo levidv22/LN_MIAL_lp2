@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import com.ln.mial.ecommerce.app.repository.DetallePedidosRepository;
+import com.ln.mial.ecommerce.infraestructure.entity.ProductosEntity;
+import jakarta.persistence.EntityNotFoundException;
 
 @Repository
 public class DetallePedidosRepositoryImpl implements DetallePedidosRepository {
@@ -23,7 +25,7 @@ public class DetallePedidosRepositoryImpl implements DetallePedidosRepository {
 
     @Override
     public DetallePedidosEntity getOrderDetailById(Integer id) {
-        return orderDetailsCrudRepository.findById(id).orElse(null);
+        return orderDetailsCrudRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order detail not found for id: " + id));
     }
 
     @Override
@@ -41,5 +43,10 @@ public class DetallePedidosRepositoryImpl implements DetallePedidosRepository {
     public boolean deleteOrderDetailById(Integer id) {
         orderDetailsCrudRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public DetallePedidosEntity findByOrderAndProduct(PedidosEntity order, ProductosEntity product) {
+        return orderDetailsCrudRepository.findByOrderAndProduct(order, product);
     }
 }

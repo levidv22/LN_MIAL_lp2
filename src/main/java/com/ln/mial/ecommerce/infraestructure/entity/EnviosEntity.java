@@ -12,7 +12,7 @@ public class EnviosEntity {
     
     private String shippingMethod; // Método de envío
     private LocalDateTime shippingDate; // Fecha de envío
-    private String shippingStatus; // En camino, Entregado.
+    private String shippingStatus; // Estado
     private LocalDateTime estimatedDeliveryDate; // Fecha estimada de entreg
 
     @ManyToOne

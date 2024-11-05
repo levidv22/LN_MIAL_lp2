@@ -50,10 +50,9 @@ public class DetallePedidosController {
 
     @PostMapping("/add")
     public String addOrderDetail(@RequestParam("productId") Integer productId,
-            @RequestParam("quantity") Integer quantity,
-            HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+                                 @RequestParam("quantity") Integer quantity,
+                                 HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         try {
-
             // Verificar si el usuario ha iniciado sesión
             UsuariosEntity user = (UsuariosEntity) session.getAttribute("user");
             if (user == null) {
@@ -97,17 +96,31 @@ public class DetallePedidosController {
                 session.setAttribute("currentOrder", order);
             }
 
-            // Crear el detalle del pedido
-            DetallePedidosEntity orderDetail = new DetallePedidosEntity();
-            orderDetail.setProduct(product);
-            orderDetail.setQuantity(quantity);
-            orderDetail.setPrice(product.getPrice());
-            orderDetail.setOrder(order);
-            detallePedidosService.saveOrderDetail(orderDetail);
+            // Buscar si ya existe un detalle de pedido para este producto en el pedido actual
+            DetallePedidosEntity orderDetail = detallePedidosService.findByOrderAndProduct(order, product);
 
-            // Recalcular el total
-            BigDecimal newTotalAmount = order.getTotalAmount().add(product.getPrice().multiply(BigDecimal.valueOf(quantity)));
-            order.setTotalAmount(newTotalAmount);
+            if (orderDetail != null) {
+                // Si el producto ya está en el pedido, actualizar la cantidad
+                orderDetail.setQuantity(orderDetail.getQuantity() + quantity);
+                detallePedidosService.saveOrderDetail(orderDetail);
+
+                // Actualizar el total
+                BigDecimal addedAmount = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+                order.setTotalAmount(order.getTotalAmount().add(addedAmount));
+            } else {
+                // Si el producto no está en el pedido, crear un nuevo detalle
+                orderDetail = new DetallePedidosEntity();
+                orderDetail.setProduct(product);
+                orderDetail.setQuantity(quantity);
+                orderDetail.setPrice(product.getPrice());
+                orderDetail.setOrder(order);
+                detallePedidosService.saveOrderDetail(orderDetail);
+
+                // Actualizar el total
+                BigDecimal newTotalAmount = order.getTotalAmount().add(product.getPrice().multiply(BigDecimal.valueOf(quantity)));
+                order.setTotalAmount(newTotalAmount);
+            }
+
             pedidosService.saveOrder(order);
 
             // Actualizar el stock en la tabla "almacen"

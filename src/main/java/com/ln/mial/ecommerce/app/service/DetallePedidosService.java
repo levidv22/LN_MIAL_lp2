@@ -5,6 +5,7 @@ import com.ln.mial.ecommerce.infraestructure.entity.PedidosEntity;
 
 import java.util.List;
 import com.ln.mial.ecommerce.app.repository.DetallePedidosRepository;
+import com.ln.mial.ecommerce.infraestructure.entity.ProductosEntity;
 
 public class DetallePedidosService {
 
@@ -29,6 +30,11 @@ public class DetallePedidosService {
     public DetallePedidosEntity saveOrderDetail(DetallePedidosEntity orderDetailsEntity) {
         return orderDetailsRepository.saveOrderDetail(orderDetailsEntity);
     }
+    
+    public DetallePedidosEntity findByOrderAndProduct(PedidosEntity order, ProductosEntity product) {
+    return orderDetailsRepository.findByOrderAndProduct(order, product);
+}
+
 
     public boolean deleteOrderDetailById(Integer id) {
         return orderDetailsRepository.deleteOrderDetailById(id);
