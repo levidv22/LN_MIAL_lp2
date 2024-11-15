@@ -4,6 +4,7 @@ import com.ln.mial.ecommerce.app.repository.*;
 import com.ln.mial.ecommerce.app.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration //  declarar configuraciones y gestionar la creación de objetos (@Bean) de manera centralizada.
 public class BeanConfig {
@@ -59,5 +60,19 @@ public class BeanConfig {
     @Bean
     public ValidateStock validateStock(AlmacenService stockService) {
         return new ValidateStock(stockService);
+    }
+    
+    @Bean
+    public LoginService loginService(UsuariosService usuariosService){
+        return new LoginService(usuariosService);
+    }
+    
+    @Bean
+    public LogoutService logoutService(){
+        return  new LogoutService();
+    } 
+    @Bean
+    public RegisterService registrationService(UsuariosService usuariosService, PasswordEncoder passwordEncoder){
+        return  new RegisterService(usuariosService, passwordEncoder);
     }
 }

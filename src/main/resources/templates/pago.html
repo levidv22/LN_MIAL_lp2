@@ -42,8 +42,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Detalles del Usuario</h5>
-                                <p><span th:text="${user.username}"></span></p>
-                                <p><span th:text="${user.email}"></span></p>
+                                <!--<p><span th:text="${user.username}"></span></p>
+                                <p><span th:text="${user.email}"></span></p>-->
 
                                 <h5 class="mt-4">Productos a Comprar</h5>
                                 <table class="table table-bordered">
@@ -62,7 +62,7 @@
                                 </table>
 
                                 <!-- Subir Imagen del Comprobante -->
-                                <form th:action="@{/checkout}" method="post" enctype="multipart/form-data">
+                                <form th:action="@{/user/checkout}" method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="shippingAddress" class="form-label">Dirección Completa para el Envío</label>
                                         <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="Ingrese su dirección de envío" required>

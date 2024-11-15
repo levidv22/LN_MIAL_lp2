@@ -12,7 +12,7 @@ import com.ln.mial.ecommerce.app.service.AlmacenService;
 import org.springframework.web.servlet.mvc.support.*;
 
 @Controller
-@RequestMapping("/carrito")
+@RequestMapping("/user/carrito")
 public class PedidoController {
 
     private final PedidosService pedidosService;
@@ -50,16 +50,16 @@ public class PedidoController {
         return "carrito";
     }
 
-    @PostMapping("/checkout")
-    public String checkout(HttpSession session) {
-        PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
-        if (order != null && order.getStatusPedido() == StatusPedido.EN_PROCESO) {
-            // Aquí se valida el pago
-            order.setStatusPedido(StatusPedido.PAGADO);
-            pedidosService.saveOrder(order);
-        }
-        return "redirect:/carrito";
-    }
+//    @PostMapping("/checkout")
+//    public String checkout(HttpSession session) {
+//        PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
+//        if (order != null && order.getStatusPedido() == StatusPedido.EN_PROCESO) {
+//            // Aquí se valida el pago
+//            order.setStatusPedido(StatusPedido.PAGADO);
+//            pedidosService.saveOrder(order);
+//        }
+//        return "redirect:/user/carrito";
+//    }
 
     @GetMapping("/cantidad")
     @ResponseBody
@@ -81,7 +81,7 @@ public class PedidoController {
             DetallePedidosEntity orderDetail = detallePedidosService.getOrderDetailById(orderDetailId);
             if (orderDetail == null) {
                 redirectAttributes.addFlashAttribute("error", "El producto no existe en el carrito.");
-                return "redirect:/carrito"; // Si no existe, redirigir al carrito
+                return "redirect:/user/carrito"; // Si no existe, redirigir al carrito
             }
 
             // Obtener el producto asociado al detalle del pedido
@@ -91,7 +91,7 @@ public class PedidoController {
             List<AlmacenEntity> stockList = almacenService.getStockByProductEntity(product);
             if (stockList.isEmpty()) {
                 redirectAttributes.addFlashAttribute("error", "No se pudo encontrar el stock del producto.");
-                return "redirect:/carrito"; // Si no hay stock, redirigir
+                return "redirect:/user/carrito"; // Si no hay stock, redirigir
             }
 
             AlmacenEntity stock = stockList.get(0);  // Asumir que hay solo un stock por producto
@@ -117,7 +117,7 @@ public class PedidoController {
             redirectAttributes.addFlashAttribute("error", "Hubo un error al eliminar el producto.");
         }
 
-        return "redirect:/carrito";
+        return "redirect:/user/carrito";
     }
 
 }

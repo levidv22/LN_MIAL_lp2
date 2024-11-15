@@ -55,10 +55,10 @@ public class DetallePedidosController {
         try {
             // Verificar si el usuario ha iniciado sesión
             UsuariosEntity user = (UsuariosEntity) session.getAttribute("user");
-            if (user == null) {
-                return "redirect:/login";
-            }
-
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para realizar una compra.");
+            return "redirect:/login";
+        }
             // Obtener el producto
             ProductosEntity product = productService.getProductById(productId);
 
@@ -67,7 +67,7 @@ public class DetallePedidosController {
             if (stockList.isEmpty()) {
                 // Si no existe el producto en el almacén, no puede agregarse al carrito
                 redirectAttributes.addFlashAttribute("error", "Este producto no está disponible en stock.");
-                return "redirect:/carrito";
+                return "redirect:/user/carrito";
             }
 
             AlmacenEntity stock = stockList.get(0);  // Asumiendo que hay solo un stock por producto
@@ -75,13 +75,13 @@ public class DetallePedidosController {
             // Verificar si el balance es mayor a 0
             if (stock.getBalance() <= 0) {
                 redirectAttributes.addFlashAttribute("error", "No hay stocks disponibles para este producto.");
-                return "redirect:/carrito";
+                return "redirect:/user/carrito";
             }
 
             // Verificar si la cantidad solicitada está disponible en el balance
             if (quantity > stock.getBalance()) {
                 redirectAttributes.addFlashAttribute("error", "La cantidad solicitada excede el stock disponible.");
-                return "redirect:/carrito";
+                return "redirect:/user/carrito";
             }
 
             // Crear o actualizar el pedido
@@ -138,7 +138,7 @@ public class DetallePedidosController {
             // Mensaje de error
             redirectAttributes.addFlashAttribute("error", "Hubo un error al agregar el producto.");
         }
-        return "redirect:/carrito";
+        return "redirect:/user/carrito";
     }
 
 }

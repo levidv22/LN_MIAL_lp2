@@ -17,7 +17,7 @@ import com.ln.mial.ecommerce.app.service.UploadFile;
 import com.ln.mial.ecommerce.infraestructure.entity.StatusPedido;
 
 @Controller
-@RequestMapping("/checkout")
+@RequestMapping("/user/checkout")
 public class PagoController {
 
     private final PagosService pagosService;
@@ -38,7 +38,7 @@ public class PagoController {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
 
         if (order == null) {
-            return "redirect:/carrito"; // Redirigir al carrito si no hay pedido
+            return "redirect:/user/carrito"; // Redirigir al carrito si no hay pedido
         }
 
         // Obtener los productos del pedido
@@ -63,7 +63,7 @@ public class PagoController {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
 
         if (order == null) {
-            return new ModelAndView("redirect:/carrito"); // Si no hay pedido en proceso, redirigir
+            return new ModelAndView("redirect:/user/carrito"); // Si no hay pedido en proceso, redirigir
         }
 
         // Guardar la dirección de envío en el pedido
@@ -87,7 +87,7 @@ public class PagoController {
         // No eliminar los productos del pedido, simplemente remover el pedido de la sesión
         session.removeAttribute("currentOrder");
 
-        return new ModelAndView("redirect:/historial/user"); // Redirigir al carrito
+        return new ModelAndView("redirect:/user/historial"); // Redirigir al carrito
     }
 
 }

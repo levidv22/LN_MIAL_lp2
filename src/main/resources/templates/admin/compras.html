@@ -29,6 +29,7 @@
                                 <thead>
                                     <tr>
                                         <th>Usuario</th>
+                                        <th>N° Whatsapp</th>
                                         <th>Productos</th>
                                         <th>Código</th>
                                         <th>Cantidad</th>
@@ -41,7 +42,8 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="pedidoAgrupado : ${pedidosAgrupados}">
-                                        <td th:text="${pedidoAgrupado.username}"></td>
+                                        <td th:text="${pedidoAgrupado.name}"></td>
+                                        <td th:text="${pedidoAgrupado.numero}"></td>
                                         <td>
                                             <ul>
                                                 <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.product.name}"></li>

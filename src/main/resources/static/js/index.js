@@ -1,5 +1,5 @@
 function updateCartCount() {
-    fetch('/carrito/cantidad')
+    fetch('/user/carrito/cantidad')
             .then(response => response.json())
             .then(data => {
                 document.getElementById('cart-count').textContent = data;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/historial")
+@RequestMapping("/user")
 public class HistorialComprasController {
 
     private final PagosService pagosService;
@@ -32,13 +32,10 @@ public class HistorialComprasController {
         this.enviosService = enviosService;
     }
 
-    @GetMapping("/user")
+    @GetMapping("/historial")
     public String showPurchasedProducts(HttpSession session, Model model) {
         // Obtener el usuario de la sesión
         UsuariosEntity user = (UsuariosEntity) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/login"; // Redirigir si no está logueado
-        }
 
         // Obtener los pedidos pagados (PAGADO) del usuario
         List<PedidosEntity> paidOrders = pedidosService.getOrdersByUserAndStatus(user, StatusPedido.PAGADO);

@@ -44,7 +44,8 @@ public class AdminComController {
 
             // Crear un mapa para agrupar los detalles de cada pedido
             Map<String, Object> pedidoAgrupado = new HashMap<>();
-            pedidoAgrupado.put("username", order.getUser().getUsername()); // Nombre de usuario
+            pedidoAgrupado.put("name", order.getUser().getFirstName()); // Nombre de usuario
+            pedidoAgrupado.put("numero", order.getUser().getCellphone()); // Nombre de usuario
             pedidoAgrupado.put("detallesPedido", orderDetails); // Detalles del pedido
             pedidoAgrupado.put("shippingAddress", order.getShippingAddress()); // Dirección de envío
             pedidoAgrupado.put("totalAmount", order.getTotalAmount()); // Monto total del pedido
@@ -67,7 +68,9 @@ public class AdminComController {
     @GetMapping("/envio/{pedidoId}")
     public String showShippingForm(@PathVariable Integer pedidoId, Model model) {//poniendo las variables que se utilizará
         PedidosEntity pedido = pedidosService.getOrderById(pedidoId);
-
+    if (pedido == null) {
+        return "redirect:/historial-compras"; // Redirigir si el pedido no existe
+    }
 
         EnviosEntity envio = enviosService.getShippingByOrder(pedido).stream().findFirst().orElse(null); // envios no nulo
 

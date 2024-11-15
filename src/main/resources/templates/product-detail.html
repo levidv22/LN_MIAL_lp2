@@ -27,33 +27,33 @@
                         </div>
 
 
-<form th:action="@{/order-details/add}" method="post">
-    <input type="hidden" name="productId" th:value="${product.id}">
-    <label for="quantity">Cantidad:</label>
-    <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" style="width: 100px;">
+                        <form th:action="@{/order-details/add}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <label for="quantity">Cantidad:</label>
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" style="width: 100px;">
 
-    <!-- Contenedor para alinear los botones -->
-    <div style="margin-top: 15px;">
-        <div th:if="${session.username != null}">
-            <button type="submit" class="btn btn-primary btn-lg" onclick="updateCartCount()">
-                <i class="fas fa-shopping-cart"></i> Agregar al carrito
-            </button>
-        </div>
-        <div th:if="${session.username == null}">
-            <button type="button" class="btn btn-primary btn-lg" onclick="showAlert()">
-                <i class="fas fa-shopping-cart"></i> Añadir al Carrito
-            </button>
-        </div>
-    </div>
-</form>
+                            <!-- Contenedor para alinear los botones -->
+                            <div style="margin-top: 15px;">
+                                <div th:if="${session.username != null}">
+                                    <button type="submit" class="btn btn-primary btn-lg" onclick="updateCartCount()">
+                                        <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                                    </button>
+                                </div>
+                                <div th:if="${session.username == null}">
+                                    <button type="button" class="btn btn-primary btn-lg" onclick="showAlert()">
+                                        <i class="fas fa-shopping-cart"></i> Añadir al Carrito
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
             </div>
-                    <!-- icono del whatsapp -->
-                    <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp" alt="Contactar por whatsapp"></i>
-                    </a>
+            <!-- icono del whatsapp -->
+            <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp" alt="Contactar por whatsapp"></i>
+            </a>
         </main>
         <div th:insert="~{he_fo_us::footer}"></div>
     </body>

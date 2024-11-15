@@ -43,7 +43,7 @@
                                          class="zoomable-image img-thumbnail" style="width: 80px; height: auto;" data-bs-toggle="modal" data-bs-target="#imageModal" th:data-bs-img-src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}">
                                 </td>
                                 <td>
-                                    <a th:href="@{/historial/envio/{pedidoId}(pedidoId=${pedidoAgrupado.detallesPedido[0].order.id})}" class="btn btn-outline-primary">
+                                    <a th:href="@{/user/envio/{pedidoId}(pedidoId=${pedidoAgrupado.detallesPedido[0].order.id})}" class="btn btn-outline-primary">
                                         <i class="fa-solid fa-truck-fast"></i>
                                     </a>
                                 </td>
