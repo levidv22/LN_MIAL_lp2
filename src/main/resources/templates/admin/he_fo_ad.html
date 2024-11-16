@@ -43,12 +43,12 @@
                     </ul>
                     <ul class="navbar-nav ms-auto me-2">
                         <li th:if="${session.username != null}" class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-user"></i> [[${session.username}]]
+                            <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.2rem;">
+                                <i class="fa-regular fa-user"></i> [[${session.firstName}]]
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item text-center">[[${session.firstName}]]</a></li>
                                 <li><a class="dropdown-item text-center">[[${session.username}]]</a></li>
-                                <li><a class="dropdown-item text-center">[[${session.name}]]</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
                             </ul>

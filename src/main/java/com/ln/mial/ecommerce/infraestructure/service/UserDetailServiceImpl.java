@@ -28,7 +28,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             UsuariosEntity user = loginService.getuser(username);
             httpSession.setAttribute("user", user);
             httpSession.setAttribute("iduser", user.getId());
-            httpSession.setAttribute("name", user.getFirstName());
+            httpSession.setAttribute("firstName", user.getFirstName());
             httpSession.setAttribute("username", user.getUsername());
             return org.springframework.security.core.userdetails.User.builder()
                     .username(user.getUsername())
