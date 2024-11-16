@@ -7,6 +7,25 @@
         <main class="flex-grow-1">
             <div class="container mt-5 my-5">
                 <div class="row justify-content-center">
+                    <!-- Menú de Categorías -->
+                    <div class="col-md-2">
+                        <h4>Categorías</h4>
+                        <br>
+                        <div class="card shadow-sm" style="border-radius: 10px;">
+                            <div class="card-body p-2" style="max-height: 400px; overflow-y: auto;">
+                                <ul class="navbar-nav w-100">
+                                    <li th:each="category : ${categories}" class="nav-item my-2">
+                                        <a th:href="@{/admin/products/category/{id}(id=${category.id})}" 
+                                           class="nav-link text-white dynapuff-regular category-link d-flex align-items-center"
+                                           style="background-color: #6c757d; border-radius: 8px; padding: 8px; transition: background-color 0.3s ease;">
+                                            <i class="fa-solid fa-heart me-2"></i>
+                                            <span th:text="${category.name}"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-10">
                         <h4 class="text-center">Productos Existentes</h4>
                         <br>
@@ -20,9 +39,9 @@
                                         <th>Precio</th>
                                         <th>Stock</th>
                                         <th>Imagen</th>
-                                        <th>Editar</th>
-                                        <th>Eliminar</th>
-                                        <th>inventario</th>
+                                        <th>Acciones</th>
+                                        <!--<th>Eliminar</th>
+                                        <th>inventario</th>-->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,15 +63,15 @@
                                                class="btn btn-outline-warning">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
-                                        </td>
-                                        <td>
+                                            <!--</td>
+                                            <td>-->
                                             <a th:href="@{/admin/create/delete/{id}(id=${product.id})}" 
                                                class="btn btn-outline-danger"
                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </a>
-                                        </td>
-                                        <td>
+                                            <!--</td>
+                                            <td>-->
                                             <a th:href="@{/admin/products/stock/{id} (id = ${product.id})}" 
                                                class="btn btn-outline-secondary">
                                                 <i class="fa-solid fa-wand-magic-sparkles"></i>

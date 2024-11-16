@@ -60,21 +60,21 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li th:if="${session.username != null}" class="nav-item position-relative me-2">
+                        <li th:if="${session.username != null}" class="nav-item position-relative ms-3">
                             <a class="mx-2 text-black" th:href="@{/user/historial}">
                                 <i class="fa-solid fa-list" style="font-size: 22px;"></i>
                             </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item position-relative me-2">
+                        <li class="nav-item position-relative ms-3">
                             <a class="mx-2 text-black" th:href="@{/index/products}">
                                 <i class="fa-solid fa-store" style="font-size: 22px;"></i>
                             </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item position-relative me-2">
+                        <li class="nav-item position-relative ms-3">
                             <a class="mx-2 text-black" th:href="@{/user/carrito}">
                                 <i class="fa-solid fa-cart-shopping" style="font-size: 22px;"></i>
                             </a>
@@ -86,7 +86,7 @@
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li th:if="${session.username != null}" class="nav-item dropdown ms-3">
-                            <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1.2rem;">
+                            <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1rem;">
                                 <i class="fa-regular fa-user" style="font-size: 22px;"></i> [[${session.firstName}]]
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

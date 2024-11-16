@@ -13,30 +13,41 @@ import org.springframework.web.bind.annotation.*;
 public class AdminProController {
 
     private final ProductosService productService;
+    private final CategoriasService categoriasService;
     private final AlmacenService almacenService;
-    private final Logger log = LoggerFactory.getLogger(AdminProController.class);
 
-    public AdminProController(ProductosService productService, AlmacenService almacenService) {
+    public AdminProController(ProductosService productService, CategoriasService categoriasService, AlmacenService almacenService) {
         this.productService = productService;
+        this.categoriasService = categoriasService;
         this.almacenService = almacenService;
     }
 
     @GetMapping
     public String showProducts(Model model) {
-        List<ProductosEntity> products = productService.getProducts();
+        return showProductsByCategoryInternal(null, model); // Mostrar todos los productos al inicio
+    }
+
+    @GetMapping("/category/{id}")
+    public String showProductsByCategory(@PathVariable Integer id, Model model) {
+        return showProductsByCategoryInternal(id, model);
+    }
+
+    private String showProductsByCategoryInternal(Integer categoryId, Model model) {
+        List<ProductosEntity> products;
+        if (categoryId == null) {
+            products = productService.getProducts(); // Obtener todos los productos
+        } else {
+            products = (List<ProductosEntity>) productService.getProductsByCategory(categoryId); // Productos por categoría
+        }
 
         for (ProductosEntity product : products) {
             List<AlmacenEntity> stockList = almacenService.getStockByProductEntity(product);
-            if (!stockList.isEmpty()) {
-                AlmacenEntity stock = stockList.get(0); // Asumiendo que hay solo un stock por producto
-                product.setBalance(stock.getBalance()); // Asigna el balance directamente al producto
-            } else {
-                product.setBalance(0); // No hay stock, establecer a 0
-            }
+            product.setBalance(stockList.isEmpty() ? 0 : stockList.get(0).getBalance());
         }
 
-        Collections.reverse(products);
+        Collections.reverse(products); // Opcional: revertir el orden de los productos
         model.addAttribute("products", products);
+        model.addAttribute("categories", categoriasService.getCategories());
         return "admin/productos";
     }
 }

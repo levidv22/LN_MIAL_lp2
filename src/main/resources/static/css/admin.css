@@ -1,33 +1,31 @@
-.socialIcons {
-    display: flex;
-    justify-content: center;
+/* Scrollbar personalizado */
+.card-body::-webkit-scrollbar {
+    width: 8px;
+}
+.card-body::-webkit-scrollbar-thumb {
+    background-color: #6c757d;
+    border-radius: 4px;
+}
+.card-body::-webkit-scrollbar-track {
+    background-color: #f8f9fa;
 }
 
-.socialIcons a {
+/* Efecto hover */
+.category-link:hover {
+    background-color: #5a6268;
     text-decoration: none;
-    padding: 5px;
-    background-color: white;
-    margin: 5px;
-    border-radius: 50%; /* Hacer los contornos circulares */
-    width: 30px; /* Asegurar que el ancho sea fijo */
-    height: 30px; /* Asegurar que la altura sea fija */
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Centrar los iconos vertical y horizontalmente */
 }
 
-.socialIcons a i {
-    font-size: 1em;
-    color: black;
-    opacity: 0.9;
+/* Fuente personalizada */
+.dynapuff-regular {
+    font-family: 'DynaPuff', cursive;
+    font-size: 16px;
 }
 
-.socialIcons a:hover {
-    background-color: black;
-    transition: 0.5s;
+/* Sombra al hacer hover */
+.category-link {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.socialIcons a:hover i {
-    color: white;
-    transition: 0.5s;
+.category-link:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
