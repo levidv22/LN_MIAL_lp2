@@ -11,7 +11,9 @@
                 <!-- Mensaje de error si no existen detalles del envío -->
                 <div th:if="${envio == null}" class="alert alert-warning text-center" role="alert">
                     El administrador aún no ingresa los datos del envío para este pedido, 
-                    en breves momentos se ingresará los datos.
+                    primero revisará el comprobante de pago si es verdadero, 
+                    si hay algun inconveniente con el pago, 
+                    nos estaremos comunicando por Whatsapp si existe algun incoveniente.
                 </div>
                 <div th:if="${envio != null}">
                     <div class="table-responsive">

@@ -28,7 +28,7 @@
                 <div class="row">
                     <!-- Columna Izquierda: Yape QR -->
                     <div class="col-md-6 text-center">
-                        <div class="card">
+                        <div class="card-1">
                             <div class="card-body">
                                 <p class="card-text"><strong>N°: 928 581 983</strong></p>
                                 <img th:src="@{/img/yape.jpg}" alt="QR Yape" class="img-fluid mb-3" style="max-width: 300px;">
@@ -39,24 +39,28 @@
 
                     <!-- Columna Derecha: Detalles del Pago -->
                     <div class="col-md-6">
-                        <div class="card">
+                        <div class="card-2">
                             <div class="card-body">
                                 <h5 class="card-title">Detalles del Usuario</h5>
-                                <!--<p><span th:text="${user.username}"></span></p>
-                                <p><span th:text="${user.email}"></span></p>-->
+                                <p><span th:text="${user.firstName}"></span></p>
+                                <p><span th:text="${user.username}"></span></p>
 
                                 <h5 class="mt-4">Productos a Comprar</h5>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Producto</th>
+                                            <th>Cantidad</th>
                                             <th>Precio</th>
+                                            <th>Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="item : ${cart}">
+                                        <tr th:if="${!cart.isEmpty()}" th:each="item : ${cart}">
                                             <td th:text="${item.product.name}"></td>
+                                            <td th:text="${item.quantity}"></td>
                                             <td>S/ <span th:text="${item.product.price}"></span></td>
+                                            <td>S/ <span th:text="${item.quantity * item.product.price}"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -67,9 +71,15 @@
                                         <label for="shippingAddress" class="form-label">Dirección Completa para el Envío</label>
                                         <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="Ingrese su dirección de envío" required>
                                     </div>
+                                    <div class="alert alert-warning text-center mb-3" role="alert">
+                                        Ingrese dirección exacta a donde llegará el Producto.
+                                    </div>
                                     <div class="mb-3">
                                         <label for="imagePago" class="form-label">Subir Comprobante</label>
                                         <input type="file" class="form-control" id="imagePago" name="file" required>
+                                    </div>
+                                    <div class="alert alert-warning text-center mb-3" role="alert">
+                                        Ingrese comprobante de pago verdadero.
                                     </div>
 
                                     <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Confirmar Pago</button>
@@ -79,10 +89,10 @@
                     </div>
                 </div>
             </div>
-                    <!-- icono del whatsapp -->
-                    <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp" alt="Contactar por whatsapp"></i>
-                    </a>
+            <!-- icono del whatsapp -->
+            <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp" alt="Contactar por whatsapp"></i>
+            </a>
         </main>
         <div th:insert="~{he_fo_us::footer}"></div>
     </body>
