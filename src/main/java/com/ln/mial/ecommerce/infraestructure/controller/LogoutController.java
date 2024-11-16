@@ -9,12 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/close")
 public class LogoutController {
-//    
-//    @GetMapping
-//    public String logout(HttpSession session) {
-//        session.invalidate(); // Invalida la sesión actual
-//        return "redirect:/home";  // Redirige a la página de inicio
-//    }
     
     private final LogoutService logoutService;
     
