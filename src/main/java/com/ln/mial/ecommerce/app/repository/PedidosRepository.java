@@ -14,5 +14,7 @@ public interface PedidosRepository {
     PedidosEntity saveOrder(PedidosEntity ordersEntity);
     List<PedidosEntity> getOrdersByStatus(StatusPedido status);
     boolean deleteOrderById(Integer id);
+    List<Object[]> getYearlyMonthlyOrderCounts();
+
 }
 

@@ -50,4 +50,10 @@ public class PedidosRepositoryImpl implements PedidosRepository {
     public List<PedidosEntity> getOrdersByStatus(StatusPedido status) {
         return orderCrudRepository.findByStatusPedido(status);
     }
+    
+    @Override
+public List<Object[]> getYearlyMonthlyOrderCounts() {
+    return orderCrudRepository.findYearlyMonthlyOrderCounts();
+}
+
 }

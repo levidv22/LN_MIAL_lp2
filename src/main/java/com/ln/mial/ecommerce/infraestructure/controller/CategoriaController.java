@@ -15,12 +15,12 @@ public class CategoriaController {
     public CategoriaController(CategoriasService categoriasService) {
         this.categoriasService = categoriasService;
     }
-
-    @GetMapping//Mostrar la vista y el contenido
-    public String showCategories(Model model) {
-        model.addAttribute("categories", categoriasService.getCategories());
-        return "admin/formulario";
-    }
+//
+//    @GetMapping//Mostrar la vista y el contenido
+//    public String showCategories(Model model) {
+//        model.addAttribute("categories", categoriasService.getCategories());
+//        return "admin/formulario";
+//    }
 
     @PostMapping
     public String addCategory(@RequestParam String name, @RequestParam String status) {

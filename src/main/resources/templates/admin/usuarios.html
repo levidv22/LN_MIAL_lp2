@@ -16,17 +16,14 @@
                                     <tr>
                                         <th>Nombre y Apellidos</th>
                                         <th>Correo Electrónico</th>
-                                        <th>N° Celular</th>
-                                        <th>Contraseña</th>
-
+                                        <th>N° Whatsapp</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="user : ${users}">
-                                        <td th:text="${user.username}"></td>
+                                        <td th:text="${user.firstName}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.cellphone}"></td>
-                                        <td th:text="${user.password}"></td>
                                     </tr>
                                 </tbody>
                             </table>
