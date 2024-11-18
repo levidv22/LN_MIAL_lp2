@@ -28,22 +28,28 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Usuario</th>
                                         <th>N° Whatsapp</th>
-                                        <th>Productos</th>
-                                        <th>Código</th>
-                                        <th>Cantidad</th>
                                         <th>Dirección</th>
-                                        <th>Imagen Pro.</th>
+                                        <th>Productos</th>
+                                        <th>Cantidad</th>
                                         <th>Pago Total</th>
-                                        <th>Comp. de Pago</th>
-                                        <th>Ag. Envio</th>
+                                        <th>Imagen</th>
+                                        <th>Pago</th>
+                                        <th>Envio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="pedidoAgrupado : ${pedidosAgrupados}">
+                                        <td>
+                                            <ul>
+                                                <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.product.code}"></li>
+                                            </ul>
+                                        </td>
                                         <td th:text="${pedidoAgrupado.name}"></td>
                                         <td th:text="${pedidoAgrupado.numero}"></td>
+                                        <td th:text="${pedidoAgrupado.shippingAddress}"></td>
                                         <td>
                                             <ul>
                                                 <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.product.name}"></li>
@@ -51,24 +57,18 @@
                                         </td>
                                         <td>
                                             <ul>
-                                                <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.product.code}"></li>
-                                            </ul>
-                                        </td>
-                                        <td>
-                                            <ul>
                                                 <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.quantity}"></li>
                                             </ul>
                                         </td>
-                                        <td th:text="${pedidoAgrupado.shippingAddress}"></td>
+                                        <td th:text="${pedidoAgrupado.totalAmount} + ' soles'"></td>
                                         <td>
                                             <div th:each="detalle : ${pedidoAgrupado.detallesPedido}">
-                                                <img th:src="@{/images/{img}(img=${detalle.product.image})}" alt="Imagen del Producto"
+                                                <img th:src="@{/images/{img}(img=${detalle.product.image})}" alt="Imagen"
                                                      class="zoomable-image img-thumbnail" style="width: 30px; height: auto;" data-bs-toggle="modal" data-bs-target="#imageModal" th:data-bs-img-src="@{/images/{img}(img=${detalle.product.image})}">
                                             </div>
                                         </td>
-                                        <td th:text="${pedidoAgrupado.totalAmount} + ' soles'"></td>
                                         <td>
-                                            <img th:src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}" alt="Comprobante de Pago"
+                                            <img th:src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}" alt="Pago"
                                                  class="zoomable-image img-thumbnail" style="width: 80px; height: auto;" data-bs-toggle="modal" data-bs-target="#imageModal" th:data-bs-img-src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}">
                                         </td>
                                         <td>
@@ -76,7 +76,6 @@
                                                 <i class="fa-solid fa-truck-fast"></i>
                                             </a>
                                         </td>
-
                                     </tr>
                                 </tbody>
                             </table>

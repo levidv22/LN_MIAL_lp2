@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
     <head th:fragment="head">
-        <title>LN_MIAL</title>
+        <title>LN MIAL</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
@@ -15,7 +15,7 @@
     </head>
 
     <div th:fragment="header">
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #F3C7CF;">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: black;">
             <div class="container">
                 <a class="navbar-brand" th:href="@{/admin/create}">
                     <img th:src="@{/img/LN_MIAL.png}" class="img-logo" alt="Logo" width="80">
@@ -47,7 +47,7 @@
                     </ul>
                     <ul class="navbar-nav ms-auto me-2">
                         <li th:if="${session.username != null}" class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-black" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1rem;">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 1rem;">
                                 <i class="fa-regular fa-user"></i> [[${session.firstName}]]
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -77,12 +77,12 @@
 
 
     <!-- Footer -->
-    <footer th:fragment="footer" class="text-black text-center py-4" style="background-color: #F3C7CF;">
+    <footer th:fragment="footer" class="text-black text-center py-4" style="background-color: #F5F5F6;">
       <div class="container">
         <div class="row text-center text-md-start">
           <!-- Logo and Description -->
           <div class="col-md-3 mb-4 text-center">
-            <h5 class="text-uppercase fw-bold mb-4"><img th:src="@{/img/LN_MIAL.png}" class="img-logo" alt="Logo" width="85"></h5>
+            <h5 class="text-uppercase fw-bold mb-4"><img th:src="@{/img/LN_MIAL.png}" class="img-logo2" alt="Logo" width="85"></h5>
             <p>Descubre la belleza y el confort con nuestra colección de lencería exclusiva. Colores suaves, estilos únicos.</p>
           </div>
     
@@ -90,10 +90,10 @@
           <div class="col-md-3 mb-4 text-center">
             <h6 class="text-uppercase fw-bold mb-4 dynapuff-regular">Enlaces Rápidos</h6>
             <ul class="list-unstyled">
-              <li><a th:href="@{/admin/create}" class="text-blue">Formulario</a></li>
-              <li><a th:href="@{/admin/products}" class="text-blue">Productos</a></li>
-              <li><a th:href="@{/admin/compras}" class="text-blue">Ventas</a></li>
-              <li><a th:href="@{/admin/usuarios}" class="text-blue">Usuarios</a></li>
+              <li><a th:href="@{/admin/create}" class="text-black">Formulario</a></li>
+              <li><a th:href="@{/admin/products}" class="text-black">Productos</a></li>
+              <li><a th:href="@{/admin/compras}" class="text-black">Ventas</a></li>
+              <li><a th:href="@{/admin/usuarios}" class="text-black">Usuarios</a></li>
             </ul>
           </div>
     

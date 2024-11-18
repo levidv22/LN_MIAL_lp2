@@ -53,7 +53,6 @@ public class ProductosService {
                 }
                 productEntity.setImage(uploadFile.upload(multipartfile)); // Guardar nueva imagen
             }
-            productEntity.setCode(productDB.getCode());
             productEntity.setUserEntity(productDB.getUserEntity());
             productEntity.setDateCreated(productDB.getDateCreated());
             productEntity.setDateUpdated(LocalDateTime.now());

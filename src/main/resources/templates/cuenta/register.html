@@ -22,7 +22,7 @@
                                             <button type="button" class="btn btn-primary">
                                                 <i class="fa-regular fa-user"></i>
                                             </button>
-                                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Ingrese su nombre" autocomplete="off" required pattern="[A-Za-z\s]+">
+                                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Ingrese su nombre" autocomplete="off" required pattern="[A-Za-z\s]+" oninput="allowOnlyText(this)">
                                             <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" th:errorclass="error"></p>
                                         </div>
                                     </div>
@@ -46,7 +46,7 @@
                                             <button type="button" class="btn btn-primary">
                                                 <i class="fa-solid fa-phone"></i>
                                             </button>
-                                            <input type="text" class="form-control" id="cellphone" name="cellphone" placeholder="Ingrese N° Whatsapp" autocomplete="off" pattern="[0-9]{9}" maxlength="9">
+                                            <input type="text" class="form-control" id="cellphone" name="cellphone" placeholder="Ingrese N° Whatsapp" autocomplete="off" pattern="[0-9]{9}" maxlength="9" oninput="allowOnlyNumbers(this)">
                                             <p th:if="${#fields.hasErrors('cellphone')}" th:errors="*{cellphone}" th:errorclass="error" ></p>
                                         </div>
                                     </div>

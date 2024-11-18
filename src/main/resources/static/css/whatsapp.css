@@ -28,7 +28,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #E57D90;
+    background-color: #3D0106;
     top: 0;
     left: 0;
     z-index: -1;
@@ -52,5 +52,5 @@
 }
 
 :root {
-    --whatsapp: #E57D90;
+    --whatsapp: #3D0106;
 }

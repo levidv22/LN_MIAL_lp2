@@ -29,3 +29,23 @@
 .category-link:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+
+
+.navbar-brand {
+    position: relative; /* Para posicionar elementos internos */
+    display: inline-block; /* Asegura que el logo se comporte como un bloque */
+}
+.img-logo {
+    transition: transform 0.3s ease, filter 0.3s ease; /* Transiciones suaves para efectos */
+    filter: invert(85%) sepia(10%) saturate(100%) hue-rotate(300deg) brightness(95%) contrast(90%);
+}
+
+/* Efecto de aumento al pasar el mouse */
+.navbar-brand:hover .img-logo {
+    transform: scale(1.1); /* Aumenta el tamaño ligeramente */
+    filter: invert(85%) sepia(10%) saturate(100%) hue-rotate(300deg) brightness(95%) contrast(90%);
+}
+.navbar-brand:hover::after {
+    opacity: 1; /* Muestra el brillo al pasar el mouse */
+}

@@ -13,7 +13,7 @@
                     <div class="col-md-6">
                         <h1 class="display-5 font-weight-bold mb-3" th:text="${product.name}">Nombre del Producto</h1>
                         <p class="lead mb-4" th:text="${product.description}">Descripción del Producto</p>
-                        <h3 class="text-success mb-4">S/ <span th:text="${product.price}">0.00</span></h3>
+                        <h3 class="text-black mb-4">S/ <span th:text="${product.price}">0.00</span></h3>
 
                         <!-- Mostrar la disponibilidad del stock -->
                         <div class="stock-info mt-3">
@@ -35,12 +35,12 @@
                             <!-- Contenedor para alinear los botones -->
                             <div style="margin-top: 15px;">
                                 <div th:if="${session.username != null}">
-                                    <button type="submit" class="btn btn-primary btn-lg" onclick="updateCartCount()">
+                                    <button type="submit" class="btn btn-lg" onclick="updateCartCount()">
                                         <i class="fas fa-shopping-cart"></i> Agregar al carrito
                                     </button>
                                 </div>
                                 <div th:if="${session.username == null}">
-                                    <button type="button" class="btn btn-primary btn-lg" onclick="showAlert()">
+                                    <button type="button" class="btn btn-lg" onclick="showAlert()">
                                         <i class="fas fa-shopping-cart"></i> Añadir al Carrito
                                     </button>
                                 </div>

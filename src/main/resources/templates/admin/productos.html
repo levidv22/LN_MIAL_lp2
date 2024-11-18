@@ -33,22 +33,22 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
-                                        <th>Código</th>
                                         <th>Precio</th>
-                                        <th>Stock</th>
+                                        <th>Cantidad</th>
                                         <th>Imagen</th>
-                                        <th>Acciones</th>
-                                        <!--<th>Eliminar</th>
-                                        <th>inventario</th>-->
+                                        <th>Stock</th>
+                                        <th>Editar</th>
+                                        <th>Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr th:each="product : ${products}">
+                                        <td th:text="${product.code}"></td>
                                         <td th:text="${product.name}"></td>
                                         <td th:text="${product.description}"></td>
-                                        <td th:text="${product.code}"></td>
                                         <td th:text="${product.price}"></td>
                                         <td th:text="${product.balance}"></td>
                                         <td>
@@ -59,22 +59,22 @@
                                         </td>
 
                                         <td>
+                                            <a th:href="@{/admin/products/stock/{id} (id = ${product.id})}" 
+                                               class="btn btn-outline-secondary">
+                                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                            </a>
+                                        </td>
+                                        <td>
                                             <a th:href="@{/admin/create/edit/{id}(id=${product.id})}" 
                                                class="btn btn-outline-warning">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </a>
-                                            <!--</td>
-                                            <td>-->
+                                        </td>
+                                        <td>
                                             <a th:href="@{/admin/create/delete/{id}(id=${product.id})}" 
                                                class="btn btn-outline-danger"
                                                onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
                                                 <i class="fa-regular fa-trash-can"></i>
-                                            </a>
-                                            <!--</td>
-                                            <td>-->
-                                            <a th:href="@{/admin/products/stock/{id} (id = ${product.id})}" 
-                                               class="btn btn-outline-secondary">
-                                                <i class="fa-solid fa-wand-magic-sparkles"></i>
                                             </a>
                                         </td>
                                     </tr>

@@ -6,7 +6,11 @@
 
         <main class="flex-grow-1">
             <div class="container mt-5 my-5">
-                <div id="chartsContainer"></div>
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div id="chartsContainer"></div>
+                    </div>
+                </div>
             </div>
 
         </main>
@@ -78,8 +82,14 @@
                                         ticks: {font: {size: 12}}
                                     },
                                     y: {
-                                        beginAtZero: true,
-                                        ticks: {font: {size: 12}}
+                                        beginAtZero: true, // Comienza en 0
+                                        ticks: {
+                                            stepSize: 1, // Incrementos de 1 en 1
+                                            font: {size: 12},
+                                            callback: function (value) {
+                                                return Number.isInteger(value) ? value : ''; // Mostrar solo enteros
+                                            }
+                                        }
                                     }
                                 }
                             }
