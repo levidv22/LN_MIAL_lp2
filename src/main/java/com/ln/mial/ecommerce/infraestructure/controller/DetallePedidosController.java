@@ -121,17 +121,6 @@ public class DetallePedidosController {
                 order.setTotalAmount(newTotalAmount);
             }
 
-            pedidosService.saveOrder(order);
-
-            // Actualizar el stock en la tabla "almacen"
-            int newSalidas = stock.getSalidas() + quantity;
-            stock.setSalidas(newSalidas);
-
-            // Recalcular el balance (entradas - salidas)
-            int newBalance = stock.getEntradas() - newSalidas;
-            stock.setBalance(newBalance);
-
-            almacenService.saveStock(stock);  // Guardar los cambios en el stock
 
             redirectAttributes.addFlashAttribute("success", "Producto agregado correctamente.");
         } catch (Exception e) {

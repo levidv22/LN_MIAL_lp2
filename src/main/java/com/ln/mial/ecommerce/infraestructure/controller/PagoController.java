@@ -24,12 +24,14 @@ public class PagoController {
     private final DetallePedidosService detallePedidosService;
     private final UploadFile uploadFile;
     private final PedidosService pedidosService;
+    private final AlmacenService almacenService;
 
-    public PagoController(PagosService pagosService, DetallePedidosService detallePedidosService, UploadFile uploadFile, PedidosService pedidosService) {
+    public PagoController(PagosService pagosService, DetallePedidosService detallePedidosService, UploadFile uploadFile, PedidosService pedidosService, AlmacenService almacenService) {
         this.pagosService = pagosService;
         this.detallePedidosService = detallePedidosService;
         this.uploadFile = uploadFile;
         this.pedidosService = pedidosService;
+        this.almacenService = almacenService;
     }
 
     // Mostrar la vista de pago
@@ -58,8 +60,8 @@ public class PagoController {
     // Procesar el pago
     @PostMapping
     public ModelAndView confirmarPago(@RequestParam("file") MultipartFile multipartfile,
-            @RequestParam("shippingAddress") String shippingAddress,
-            HttpSession session) throws IOException {
+                                      @RequestParam("shippingAddress") String shippingAddress,
+                                      HttpSession session) throws IOException {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
 
         if (order == null) {
@@ -84,10 +86,21 @@ public class PagoController {
         order.setStatusPedido(StatusPedido.PAGADO);
         pedidosService.saveOrder(order); // Guardar los cambios en el pedido
 
-        // No eliminar los productos del pedido, simplemente remover el pedido de la sesión
+        // Actualizar el stock en el almacén
+        for (DetallePedidosEntity orderDetail : detallePedidosService.getOrderDetailsByOrder(order)) {
+            ProductosEntity product = orderDetail.getProduct();
+            AlmacenEntity stock = almacenService.getStockByProductEntity(product).get(0);
+
+            // Actualizar las salidas y balance
+            stock.setSalidas(stock.getSalidas() + orderDetail.getQuantity());
+            stock.setBalance(stock.getEntradas() - stock.getSalidas());
+            almacenService.saveStock(stock);
+        }
+
+        // Remover el pedido de la sesión
         session.removeAttribute("currentOrder");
 
-        return new ModelAndView("redirect:/user/historial"); // Redirigir al carrito
+        return new ModelAndView("redirect:/user/historial"); // Redirigir al historial de pedidos
     }
 
 }

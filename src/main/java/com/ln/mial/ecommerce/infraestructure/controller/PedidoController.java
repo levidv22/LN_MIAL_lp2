@@ -50,17 +50,6 @@ public class PedidoController {
         return "carrito";
     }
 
-//    @PostMapping("/checkout")
-//    public String checkout(HttpSession session) {
-//        PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
-//        if (order != null && order.getStatusPedido() == StatusPedido.EN_PROCESO) {
-//            // Aquí se valida el pago
-//            order.setStatusPedido(StatusPedido.PAGADO);
-//            pedidosService.saveOrder(order);
-//        }
-//        return "redirect:/user/carrito";
-//    }
-
     @GetMapping("/cantidad")
     @ResponseBody
     public int getCartItemCount(HttpSession session) {
@@ -75,48 +64,45 @@ public class PedidoController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteFromCart(@PathVariable("id") Integer orderDetailId, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String deleteFromCart(@PathVariable("id") Integer orderDetailId) {
+        detallePedidosService.deleteOrderDetailById(orderDetailId);
+        return "redirect:/user/carrito";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateCartItem(@PathVariable("id") Integer orderDetailId,
+            @RequestParam("newQuantity") Integer newQuantity,
+            HttpSession session, RedirectAttributes redirectAttributes) {
         try {
-            // Obtener el detalle del pedido que se va a eliminar
             DetallePedidosEntity orderDetail = detallePedidosService.getOrderDetailById(orderDetailId);
             if (orderDetail == null) {
                 redirectAttributes.addFlashAttribute("error", "El producto no existe en el carrito.");
-                return "redirect:/user/carrito"; // Si no existe, redirigir al carrito
+                return "redirect:/user/carrito";
             }
 
-            // Obtener el producto asociado al detalle del pedido
+            // Obtener el stock del producto
             ProductosEntity product = orderDetail.getProduct();
+            AlmacenEntity stock = almacenService.getStockByProductEntity(product).get(0);
 
-            // Obtener el stock de ese producto en el almacén
-            List<AlmacenEntity> stockList = almacenService.getStockByProductEntity(product);
-            if (stockList.isEmpty()) {
-                redirectAttributes.addFlashAttribute("error", "No se pudo encontrar el stock del producto.");
-                return "redirect:/user/carrito"; // Si no hay stock, redirigir
+            if (newQuantity > stock.getBalance()) {
+                redirectAttributes.addFlashAttribute("error", "No puedes agregar más productos que los disponibles en stock.");
+                return "redirect:/user/carrito";
             }
 
-            AlmacenEntity stock = stockList.get(0);  // Asumir que hay solo un stock por producto
+            // Actualizar la cantidad y recalcular el total
+            BigDecimal oldTotal = orderDetail.getPrice().multiply(BigDecimal.valueOf(orderDetail.getQuantity()));
+            orderDetail.setQuantity(newQuantity);
+            detallePedidosService.saveOrderDetail(orderDetail);
 
-            // Actualizar el campo "salidas" y "balance"
-            int quantity = orderDetail.getQuantity();
-            int newSalidas = stock.getSalidas() - quantity;
-            stock.setSalidas(newSalidas);
+            PedidosEntity order = orderDetail.getOrder();
+            order.setTotalAmount(order.getTotalAmount().subtract(oldTotal)
+                    .add(orderDetail.getPrice().multiply(BigDecimal.valueOf(newQuantity))));
+            pedidosService.saveOrder(order);
 
-            // Recalcular el balance (entradas - salidas)
-            int newBalance = stock.getEntradas() - newSalidas;
-            stock.setBalance(newBalance);
-
-            // Guardar los cambios en el stock
-            almacenService.saveStock(stock);
-
-            // Eliminar el detalle del pedido
-            detallePedidosService.deleteOrderDetailById(orderDetailId);
-
-            redirectAttributes.addFlashAttribute("success", "Producto eliminado correctamente.");
+            redirectAttributes.addFlashAttribute("success", "Cantidad actualizada correctamente.");
         } catch (Exception e) {
-            // Mensaje de error
-            redirectAttributes.addFlashAttribute("error", "Hubo un error al eliminar el producto.");
+            redirectAttributes.addFlashAttribute("error", "Hubo un error al actualizar la cantidad.");
         }
-
         return "redirect:/user/carrito";
     }
 

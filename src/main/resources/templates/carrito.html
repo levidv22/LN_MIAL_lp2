@@ -7,18 +7,18 @@
             <div class="container mt-5 my-5">
                 <div class="row">
                     <h4 class="text-center">Carrito de Compras</h4>
-                        <!-- Mostrar mensajes de éxito -->
-                        <div th:if="${success != null}">
-                            <div class="alert alert-success" role="alert">
-                                <span th:text="${success}"></span>
-                            </div>
+                    <!-- Mostrar mensajes de éxito -->
+                    <div th:if="${success != null}">
+                        <div class="alert alert-success" role="alert">
+                            <span th:text="${success}"></span>
                         </div>
-                        <!-- Mostrar mensajes de error si existen -->
-                        <div th:if="${error != null}">
-                            <div class="alert alert-danger" role="alert">
-                                <span th:text="${error}"></span>
-                            </div>
+                    </div>
+                    <!-- Mostrar mensajes de error si existen -->
+                    <div th:if="${error != null}">
+                        <div class="alert alert-danger" role="alert">
+                            <span th:text="${error}"></span>
                         </div>
+                    </div>
                     <!-- Columna Izquierda: Tabla de Productos -->
                     <br>
                     <div class="col-md-8">
@@ -38,7 +38,15 @@
                             <tbody>
                                 <tr th:if="${!cart.isEmpty()}" th:each="item : ${cart}">
                                     <td th:text="${item.product.name}"></td>
-                                    <td th:text="${item.quantity}"></td>
+                                    <td>
+                                        <form th:action="@{/user/carrito/update/{id} (id=${item.id})}" method="post" style="display: inline-block;">
+                                            <input type="number" name="newQuantity" th:value="${item.quantity}" min="1" max="${item.product.stock}" class="form-control" style="width: 70px; display: inline-block;">
+                                            <button type="submit" class="btn btn-outline-primary" title="Actualizar cantidad">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
                                     <td>S/ <span th:text="${item.product.price}"></span></td>
                                     <td>S/ <span th:text="${item.quantity * item.product.price}"></span></td>
                                     <td>
@@ -56,18 +64,18 @@
                                 <h4 class="card-title text-center">Resumen del Pedido</h4>
                                 <hr>
                                 <p><strong>Total a pagar:</strong> S/ <span th:text="${totalAmount}"></span></p>
-                                <a  th:if="${!cart.isEmpty()}" th:href="@{/user/checkout}" class="btn btn-black">
-                                    <i class="fa fa-credit-card"></i>Ir a Pagar
+                                <a  th:if="${!cart.isEmpty()}" th:href="@{/user/checkout}" class="btn btn-black text-white">
+                                    <i class="fa fa-credit-card text-white"></i>Ir a Pagar
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-                    <!-- icono del whatsapp -->
-                    <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp" alt="Contactar por whatsapp"></i>
-                    </a>
+            <!-- icono del whatsapp -->
+            <a href="https://wa.me/51928581983" class="btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp" alt="Contactar por whatsapp"></i>
+            </a>
         </main>
         <div th:insert="~{he_fo_us::footer}"></div>
     </body>

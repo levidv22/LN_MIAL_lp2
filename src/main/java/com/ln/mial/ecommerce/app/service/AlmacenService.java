@@ -38,4 +38,9 @@ public class AlmacenService {
         return stockRepository.saveStock(existingStock);
     }
 
+    public Integer getAvailableStock(ProductosEntity product) {
+    AlmacenEntity stock = getStockByProduct(product);
+    return stock != null ? stock.getBalance() : 0;
+}
+
 }

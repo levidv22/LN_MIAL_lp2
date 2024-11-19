@@ -49,3 +49,37 @@
 .navbar-brand:hover::after {
     opacity: 1; /* Muestra el brillo al pasar el mouse */
 }
+
+
+
+
+.navbar-toggler-icon {
+    background-image: none; /* Quita la imagen predeterminada */
+    background-color: white; /* Cambia el color a blanco */
+    width: 30px; /* Ajusta el tamaño según sea necesario */
+    height: 3px;
+    display: block;
+    margin: 5px auto;
+    position: relative;
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+    content: '';
+    background-color: white;
+    width: 30px;
+    height: 3px;
+    display: block;
+    position: absolute;
+    left: 0;
+    transform-origin: center;
+    transition: 0.3s ease;
+}
+
+.navbar-toggler-icon::before {
+    top: -10px; /* Línea superior */
+}
+
+.navbar-toggler-icon::after {
+    top: 10px; /* Línea inferior */
+}
