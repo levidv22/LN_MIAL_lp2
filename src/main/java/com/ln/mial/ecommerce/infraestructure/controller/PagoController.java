@@ -71,6 +71,14 @@ public class PagoController {
         // Guardar la dirección de envío en el pedido
         order.setShippingAddress(shippingAddress);
 
+        // Asegurarse de que el total esté actualizado
+    BigDecimal totalAmount = order.getTotalAmount();
+    if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+        totalAmount = pedidosService.calculateTotal(order); // Calcular si no está guardado
+        order.setTotalAmount(totalAmount);
+        pedidosService.saveOrder(order);
+    }
+    
         // Guardar el comprobante en el sistema de archivos
         String imagePago = uploadFile.upload(multipartfile); // Guardar la imagen y obtener el nombre del archivo
 

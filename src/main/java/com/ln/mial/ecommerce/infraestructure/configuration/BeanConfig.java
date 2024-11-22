@@ -33,8 +33,8 @@ public class BeanConfig {
     }
 
     @Bean
-    public PedidosService orderService(PedidosRepository orderRepository) {
-        return new PedidosService(orderRepository);
+    public PedidosService orderService(PedidosRepository orderRepository, DetallePedidosService detallePedidosService) {
+        return new PedidosService(orderRepository, detallePedidosService);
     }
 
     @Bean
@@ -72,7 +72,7 @@ public class BeanConfig {
         return  new LogoutService();
     } 
     @Bean
-    public RegisterService registrationService(UsuariosService usuariosService, PasswordEncoder passwordEncoder){
-        return  new RegisterService(usuariosService, passwordEncoder);
+    public RegisterService registrationService(UsuariosService usuariosService, PasswordEncoder passwordEncoder, EmailService emailService){
+        return  new RegisterService(usuariosService, passwordEncoder, emailService);
     }
 }

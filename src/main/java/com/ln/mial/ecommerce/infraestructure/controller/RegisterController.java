@@ -20,25 +20,28 @@ public class RegisterController {
     public RegisterController(RegisterService registerService) {
         this.registerService = registerService;
     }
-    
+
     @GetMapping
     public String showRegister(UserDto userDto) {
         return "cuenta/register"; // Redirige a register.html
     }
 
     @PostMapping
-    public String registerUser(@Valid UserDto userDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-//        user.setDateCreated(LocalDateTime.now());
-//        user.setUserType(UserType.USER);
-//        user.setUsername(user.getEmail());
-        if(bindingResult.hasErrors()){
-            bindingResult.getAllErrors().forEach(
-                    e->{ log.info( "Error {}", e.getDefaultMessage() ); }
-            );
-            return "register";
+    public String registerUser(@Valid UserDto userDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(e -> log.info("Error {}", e.getDefaultMessage()));
+            return "cuenta/register";
         }
-        registerService.register(userDto.userDtoToUser());
-        redirectAttributes.addFlashAttribute("success", "Usuario creado correctamente");
-        return "redirect:/login";
+
+        try {
+            registerService.register(userDto.userDtoToUser());
+            redirectAttributes.addFlashAttribute("success", "Usuario creado correctamente");
+            return "redirect:/login";
+        } catch (IllegalArgumentException e) {
+            // Añadir el mensaje de error al modelo
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/register";
+        }
     }
+
 }

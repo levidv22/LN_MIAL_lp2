@@ -285,14 +285,14 @@ a.no-underline:hover {
 .dropdown-menu .dropdown-item {
     text-align: center;
     padding: 10px;
-    color: #333;
+    color: black;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Hover de elementos en el dropdown */
 .dropdown-menu .dropdown-item:hover {
-    background-color: #FFD1D1;
-    color: #ff5e5e;
+    background-color: white;
+    color: black;
 }
 
 
