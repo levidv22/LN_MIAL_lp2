@@ -11,9 +11,6 @@
                             <img th:src="@{/img/LN_MIAL.png}" alt="Logo" class="img-fluid" style="max-width: 150px;">
                         </a>
                         <h2 class="text-center mb-4">Iniciar Sesión</h2>
-                        <div th:if="${param.success != null}" class="alert alert-success text-center" role="alert">
-                            <span th:text="${param.success == 'password_reset' ? 'Contraseña Restablecida.' : 'Contraseña Restablecida'}"></span>
-                        </div>
 
                         <form th:action="@{/login}" method="post">
                             <div class="mb-3 position-relative">

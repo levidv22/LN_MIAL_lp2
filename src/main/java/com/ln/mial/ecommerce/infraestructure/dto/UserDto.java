@@ -62,6 +62,14 @@ public class UserDto {
     
 
     public UsuariosEntity userDtoToUser() {
-        return new UsuariosEntity(null, this.getEmail(), this.getFirstName(),this.getEmail(), this.getCellphone(), this.getPassword(), LocalDateTime.now(), TypeUser.USER);
+        return new UsuariosEntity(
+                null, 
+                this.getEmail(), 
+                this.getFirstName(),
+                this.getEmail(), 
+                this.getCellphone(), 
+                this.getPassword(), 
+                LocalDateTime.now(), 
+                TypeUser.USER);
     }
 }

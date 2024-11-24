@@ -21,7 +21,7 @@ public class UsuarioController {
 // Ruta para mostrar productos (tanto para clientes autenticados como no autenticados)
     @GetMapping
     public String showIndex(Model model) {
-        Iterable<ProductosEntity> products = productService.getProducts();
+        Iterable<ProductosEntity> products = productService.getProducts();//llama  los valores del entity y product.... get hce mostrar todos los productos
         // Obtener todas las categorías para los botones
         Iterable<CategoriasEntity> categories = categoriasService.getCategories();
         // Añadir productos y categorías al modelo

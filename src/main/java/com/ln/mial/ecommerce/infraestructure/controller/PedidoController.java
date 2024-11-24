@@ -26,7 +26,7 @@ public class PedidoController {
     }
 
     @GetMapping
-    public String showCart(HttpSession session, Model model) {
+    public String showCart(HttpSession session, Model model) {//muestre pedido solo si iniciaste sesión
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
 
         // Si el pedido no existe o ya fue enviado, mostrar un carrito vacío

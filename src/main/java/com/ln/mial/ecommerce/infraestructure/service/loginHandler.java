@@ -22,7 +22,7 @@ public class loginHandler extends SavedRequestAwareAuthenticationSuccessHandler 
                     if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                         redirectURL.set("/admin/create");
                     } else {
-                        redirectURL.set("/index/products");
+                        redirectURL.set("/home");
                     }
                 }
         );
