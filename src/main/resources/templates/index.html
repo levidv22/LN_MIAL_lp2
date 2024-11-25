@@ -13,15 +13,16 @@
                 </div>
                 <div class="row justify-content-center mt-4">
                     <div class="col-md-3" th:each="product : ${products}">
-                        <a th:href="@{/order-details/product/{id}(id=${product.id})}" class="no-underline">
+                        <a th:href="@{/order-details/product/{id}(id=${product.id})}" class="no-underline"> <!--detlle pedidocontro-->
                             <div class="card mb-3">
                                 <div class="image1-container">
+                                    <!--image - entity-->
                                     <img th:src="@{/images/{image}(image=${product.image})}" class="card-img-top" alt="Imagen del producto"
                                          th:if="${product.image != null}"/>
                                     <img th:src="@{/images/default.png}" class="card-img-top" alt="Imagen del producto" th:if="${product.image == null}"/>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-title open-sans"><strong>[[${product.name}]]</strong></p>
+                                    <p class="card-title open-sans"><strong>[[${product.name}]]</strong></p><!--entity-->
                                     <p class="card-text">S/ [[${product.price}]]</p>
                                 </div>
                             </div>

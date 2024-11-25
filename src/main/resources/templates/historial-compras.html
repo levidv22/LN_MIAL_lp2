@@ -24,27 +24,27 @@
                             <tr th:each="pedidoAgrupado : ${pedidosAgrupados}">
                                 <td>
                                     <ul>
-                                        <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.product.name}"></li>
+                                        <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.product.name}"></li> <!--usercontroller-->
                                     </ul>
                                 </td>
                                 <td>
                                     <ul>
-                                        <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.quantity}"></li>
+                                        <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.quantity}"></li><!--detalle pedido entity-->
                                     </ul>
                                 </td>
                                 <td>
                                     <ul>
-                                        <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.price} + ' soles'"></li>
+                                        <li th:each="detalle : ${pedidoAgrupado.detallesPedido}" th:text="${detalle.price} + ' soles'"></li><!--product entity-->
                                     </ul>
                                 </td>
-                                <td th:text="${pedidoAgrupado.totalAmount} + ' soles'"></td>
+                                <td th:text="${pedidoAgrupado.totalAmount} + ' soles'"></td><!--pago controller-->
                                 <td>
-                                    <img th:src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}" alt="Comprobante de Pago"
-                                         class="zoomable-image img-thumbnail" style="width: 80px; height: auto;" data-bs-toggle="modal" data-bs-target="#imageModal" th:data-bs-img-src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}">
+                                    <img th:src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}" alt="Comprobante de Pago" 
+                                         class="zoomable-image img-thumbnail" style="width: 80px; height: auto;" data-bs-toggle="modal" data-bs-target="#imageModal" th:data-bs-img-src="@{/images/{img}(img=${pedidoAgrupado.imagenPago})}"> <!--pagoentity-->
                                 </td>
                                 <td>
                                     <a th:href="@{/user/envio/{pedidoId}(pedidoId=${pedidoAgrupado.detallesPedido[0].order.id})}" class="btn btn-outline-primary">
-                                        <i class="fa-solid fa-truck-fast"></i>
+                                        <i class="fa-solid fa-truck-fast"></i><!--redirige a envio historialcompracontroller-->
                                     </a>
                                 </td>
                             </tr>

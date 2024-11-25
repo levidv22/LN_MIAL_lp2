@@ -12,7 +12,7 @@
                         <div class="card p-4 shadow-lg" style="border-radius: 20px; max-width: 400px;">
                             <h4 class="text-center">Crear Categorías</h4>
                             <br>
-                            <form th:action="@{/admin/categories}" method="post">
+                            <form th:action="@{/admin/categories}" method="post"><!--categoria controller-->
                                 <div class="mb-3">
                                     <label for="categoryName" class="form-label">Nombre de la Categoría</label>
                                     <input type="text" class="form-control" id="categoryName" name="name" required>
@@ -33,13 +33,13 @@
                         <div class="card p-4 shadow-lg" style="border-radius: 20px; max-width: 400px;">
                             <h4 class="text-center">Crear Productos</h4>
                             <br>
-                            <form th:action="@{/admin/create}" method="post" enctype="multipart/form-data">
+                            <form th:action="@{/admin/create}" method="post" enctype="multipart/form-data"><!--adminfromcontroller-->
                                 <div class="mb-3">
                                     <label for="category" class="form-label">Categoría</label>
                                     <select class="form-control" id="category" name="categoryId" required>
                                         <option value="">Seleccionar Categoría</option>
                                         <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" autocomplete="off"></option>
-                                    </select>
+                                    </select><!--adfromcontrol---entity id y name-->
                                 </div>
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nombre del Producto</label>

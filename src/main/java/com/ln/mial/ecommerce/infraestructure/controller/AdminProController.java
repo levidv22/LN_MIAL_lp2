@@ -23,7 +23,7 @@ public class AdminProController {
     }
 
     @GetMapping
-    public String showProducts(Model model) {
+    public String showProducts(Model model) { //este llama la l linea 35
         return showProductsByCategoryInternal(null, model); // Mostrar todos los productos al inicio
     }
 
@@ -40,7 +40,7 @@ public class AdminProController {
             products = (List<ProductosEntity>) productService.getProductsByCategory(categoryId); // Productos por categoría
         }
 
-        for (ProductosEntity product : products) {
+        for (ProductosEntity product : products) {// stock mostrar cantdad de productos existentes
             List<AlmacenEntity> stockList = almacenService.getStockByProductEntity(product);
             product.setBalance(stockList.isEmpty() ? 0 : stockList.get(0).getBalance());
         }

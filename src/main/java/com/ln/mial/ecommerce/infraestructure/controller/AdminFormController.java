@@ -23,7 +23,7 @@ public class AdminFormController {
         this.categoriasService = categoriasService;
     }
 
-    @GetMapping
+    @GetMapping//mues
     public String showCategory(Model model) {
         Iterable<CategoriasEntity> categories = categoriasService.getCategories(); // Obtener las categorías
         model.addAttribute("categories", categories); // Añadir las categorías al modelo
@@ -32,10 +32,10 @@ public class AdminFormController {
 
     @PostMapping
     public String addProduct(ProductosEntity product, @RequestParam("file") MultipartFile multipartfile, @RequestParam("categoryId") Integer categoryId, HttpSession session) throws IOException {
-        CategoriasEntity category = categoriasService.getCategoryById(categoryId);
-        product.setCategory(category);  // Set selected category
+        CategoriasEntity category = categoriasService.getCategoryById(categoryId);//lama a cte por id
+        product.setCategory(category);  // envia lo que seleccionecategory
         log.info("Nombre de producto: {}", product);
-        productService.saveProduct(product, multipartfile, session);
+        productService.saveProduct(product, multipartfile, session);//guardatodo
         return "redirect:/admin/products";
     }
 

@@ -72,7 +72,7 @@ public class DetallePedidosController {
 
             AlmacenEntity stock = stockList.get(0);  // Asumiendo que hay solo un stock por producto
 
-            // Verificar si el balance es mayor a 0
+            // Verificar si el balance es menor  a 0
             if (stock.getBalance() <= 0) {
                 redirectAttributes.addFlashAttribute("error", "No hay stocks disponibles para este producto.");
                 return "redirect:/user/carrito";
@@ -96,7 +96,7 @@ public class DetallePedidosController {
                 session.setAttribute("currentOrder", order);
             }
 
-            // Buscar si ya existe un detalle de pedido para este producto en el pedido actual
+            //si hay un producto existen en el carrito y quiere agrerr ese mismo producto se suma la cntidad producto en el pedido actual
             DetallePedidosEntity orderDetail = detallePedidosService.findByOrderAndProduct(order, product);
 
             if (orderDetail != null) {
@@ -108,7 +108,7 @@ public class DetallePedidosController {
                 BigDecimal addedAmount = product.getPrice().multiply(BigDecimal.valueOf(quantity));
                 order.setTotalAmount(order.getTotalAmount().add(addedAmount));
             } else {
-                // Si el producto no está en el pedido, crear un nuevo detalle
+                // Si el producto no está en el pedido, crear un nuevo producto al carrito
                 orderDetail = new DetallePedidosEntity();
                 orderDetail.setProduct(product);
                 orderDetail.setQuantity(quantity);
@@ -116,7 +116,7 @@ public class DetallePedidosController {
                 orderDetail.setOrder(order);
                 detallePedidosService.saveOrderDetail(orderDetail);
 
-                // Actualizar el total
+                // Actualizar el total    multiplics el precio por l cantidd
                 BigDecimal newTotalAmount = order.getTotalAmount().add(product.getPrice().multiply(BigDecimal.valueOf(quantity)));
                 order.setTotalAmount(newTotalAmount);
             }

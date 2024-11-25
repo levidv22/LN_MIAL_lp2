@@ -59,7 +59,7 @@ public class PagoController {
 
     // Procesar el pago
     @PostMapping
-    public ModelAndView confirmarPago(@RequestParam("file") MultipartFile multipartfile,
+    public ModelAndView confirmarPago(@RequestParam("file") MultipartFile multipartfile, //parametros
                                       @RequestParam("shippingAddress") String shippingAddress,
                                       HttpSession session) throws IOException {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
@@ -82,7 +82,7 @@ public class PagoController {
         // Guardar el comprobante en el sistema de archivos
         String imagePago = uploadFile.upload(multipartfile); // Guardar la imagen y obtener el nombre del archivo
 
-        // Crear un nuevo registro de pago
+        // guarda los datos en la bd (pagos)
         PagosEntity pago = new PagosEntity();
         pago.setAmount(order.getTotalAmount());
         pago.setPaymentDate(LocalDateTime.now());
@@ -99,13 +99,13 @@ public class PagoController {
             ProductosEntity product = orderDetail.getProduct();
             AlmacenEntity stock = almacenService.getStockByProductEntity(product).get(0);
 
-            // Actualizar las salidas y balance
+            // Actualizar las salidas y balance bd (almacen)
             stock.setSalidas(stock.getSalidas() + orderDetail.getQuantity());
             stock.setBalance(stock.getEntradas() - stock.getSalidas());
             almacenService.saveStock(stock);
         }
 
-        // Remover el pedido de la sesión
+        // Remover el pedido del carrito
         session.removeAttribute("currentOrder");
 
         return new ModelAndView("redirect:/user/historial"); // Redirigir al historial de pedidos
