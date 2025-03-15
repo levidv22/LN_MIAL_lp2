@@ -3,6 +3,7 @@ package com.ln.mial.ecommerce.infraestructure.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "producto")
@@ -30,21 +31,10 @@ public class ProductosEntity {
     @Transient // Esto indica que este campo no se persistirá en la base de datos
     private Integer balance;
 
-    public ProductosEntity() {
-    }
 
-    public ProductosEntity(Integer id, String code, String name, String description, String image, BigDecimal price, LocalDateTime dateCreated, LocalDateTime dateUpdated, UsuariosEntity userEntity, CategoriasEntity category, Integer balance) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
-        this.userEntity = userEntity;
-        this.category = category;
-        this.balance = balance;
+    public ProductosEntity() {
+
+        this.setCode(UUID.randomUUID().toString());
     }
 
     public Integer getId() {
@@ -135,5 +125,8 @@ public class ProductosEntity {
         this.balance = balance;
     }
 
-    
+    @Override
+    public String toString() {
+        return "ProductEntity{" + "id=" + id + ", code=" + code + ", name=" + name + ", description=" + description + ", image=" + image + ", price=" + price + ", userEntity=" + userEntity + ", dateCreated=" + dateCreated + ", dateUpdated=" + dateUpdated + '}';
+    }
 }

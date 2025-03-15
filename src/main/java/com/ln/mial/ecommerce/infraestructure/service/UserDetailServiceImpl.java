@@ -30,6 +30,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             httpSession.setAttribute("iduser", user.getId());
             httpSession.setAttribute("firstName", user.getFirstName());
             httpSession.setAttribute("username", user.getUsername());
+            httpSession.setAttribute("cellphone", user.getCellphone());
             return org.springframework.security.core.userdetails.User.builder()
                     .username(user.getUsername())
                     .password(user.getPassword())

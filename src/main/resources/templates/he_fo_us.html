@@ -102,6 +102,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item text-center">[[${session.firstName}]]</a></li>
                                 <li><a class="dropdown-item text-center">[[${session.username}]]</a></li>
+                                <li><a class="dropdown-item text-center">[[${session.cellphone}]]</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" th:href="@{/logout}"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
                             </ul>
@@ -115,6 +116,12 @@
                 </div>
             </div>
         </nav>
+    </div>
+
+    <div th:fragment="alert">
+        <div class="alert alert-warning" role="alert" th:if="${session.error}">
+            A simple warning alert—check it out!
+        </div>
     </div>
 
     <!-- Footer -->

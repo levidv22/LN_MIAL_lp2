@@ -15,6 +15,8 @@ import java.util.*;
 import com.ln.mial.ecommerce.app.service.DetallePedidosService;
 import com.ln.mial.ecommerce.app.service.UploadFile;
 import com.ln.mial.ecommerce.infraestructure.entity.StatusPedido;
+import jakarta.mail.MessagingException;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/user/checkout")
@@ -25,13 +27,15 @@ public class PagoController {
     private final UploadFile uploadFile;
     private final PedidosService pedidosService;
     private final AlmacenService almacenService;
+    private final EmailService emailService;
 
-    public PagoController(PagosService pagosService, DetallePedidosService detallePedidosService, UploadFile uploadFile, PedidosService pedidosService, AlmacenService almacenService) {
+    public PagoController(PagosService pagosService, DetallePedidosService detallePedidosService, UploadFile uploadFile, PedidosService pedidosService, AlmacenService almacenService, EmailService emailService) {
         this.pagosService = pagosService;
         this.detallePedidosService = detallePedidosService;
         this.uploadFile = uploadFile;
         this.pedidosService = pedidosService;
         this.almacenService = almacenService;
+        this.emailService = emailService;
     }
 
     // Mostrar la vista de pago
@@ -60,8 +64,8 @@ public class PagoController {
     // Procesar el pago
     @PostMapping
     public ModelAndView confirmarPago(@RequestParam("file") MultipartFile multipartfile, //parametros
-                                      @RequestParam("shippingAddress") String shippingAddress,
-                                      HttpSession session) throws IOException {
+            @RequestParam("shippingAddress") String shippingAddress,
+            HttpSession session) throws IOException, MessagingException {
         PedidosEntity order = (PedidosEntity) session.getAttribute("currentOrder");
 
         if (order == null) {
@@ -72,14 +76,20 @@ public class PagoController {
         order.setShippingAddress(shippingAddress);
 
         // Asegurarse de que el total esté actualizado
-    BigDecimal totalAmount = order.getTotalAmount();
-    if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
-        totalAmount = pedidosService.calculateTotal(order); // Calcular si no está guardado
-        order.setTotalAmount(totalAmount);
-        pedidosService.saveOrder(order);
-    }
-    
-        // Guardar el comprobante en el sistema de archivos
+        BigDecimal totalAmount = order.getTotalAmount();
+        if (totalAmount == null || totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            totalAmount = pedidosService.calculateTotal(order); // Calcular si no está guardado
+            order.setTotalAmount(totalAmount);
+            pedidosService.saveOrder(order);
+        }
+
+        // Validar y guardar el comprobante de pago
+        if (multipartfile != null && multipartfile.getContentType() != null
+                && !multipartfile.getContentType().toLowerCase().startsWith("image")) {
+            session.setAttribute("Error", "El archivo no contiene una extensión válida");
+            throw new MultipartException("Archivo inválido");
+        }
+
         String imagePago = uploadFile.upload(multipartfile); // Guardar la imagen y obtener el nombre del archivo
 
         // guarda los datos en la bd (pagos)
@@ -103,6 +113,78 @@ public class PagoController {
             stock.setSalidas(stock.getSalidas() + orderDetail.getQuantity());
             stock.setBalance(stock.getEntradas() - stock.getSalidas());
             almacenService.saveStock(stock);
+        }
+
+        // Enviar correo electrónico al cliente
+        UsuariosEntity user = (UsuariosEntity) session.getAttribute("user");
+        if (user != null) {
+            String email = user.getEmail();
+            String subject = "Confirmación de Pago de Lencería MIAL";
+
+            // Formatear la fecha
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy -- hh:mm a");
+            String formattedDate = LocalDateTime.now().format(formatter);
+
+            // Construir el cuerpo del correo con HTML
+            StringBuilder productDetails = new StringBuilder();
+            for (DetallePedidosEntity detail : detallePedidosService.getOrderDetailsByOrder(order)) {
+                productDetails.append("<tr>")
+                        .append("<td>").append(detail.getProduct().getName()).append("</td>")
+                        .append("<td>").append(detail.getQuantity()).append("</td>")
+                        .append("<td>").append(detail.getPrice()).append("</td>")
+                        .append("</tr>");
+            }
+
+            String body = String.format(
+                    "<!DOCTYPE html>"
+                    + "<html>"
+                    + "<head>"
+                    + "<style>"
+                    + "body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }"
+                    + ".container { max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 10px; }"
+                    + "h2 { color: #333333; }"
+                    + "table { width: 100%%; border-collapse: collapse; margin-top: 20px; }"
+                    + "th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }"
+                    + "th { background-color: #f8f8f8; }"
+                    + ".footer { margin-top: 20px; font-size: 12px; text-align: center; color: #888888; }"
+                    + "</style>"
+                    + "</head>"
+                    + "<body>"
+                    + "<div class='container'>"
+                    + "<h2>Gracias por tu compra, %s!</h2>"
+                    + "<p>Estos son los detalles de tu pago:</p>"
+                    + "<p><strong>Monto Total:</strong> %s</p>"
+                    + "<p><strong>Fecha de Pago:</strong> %s</p>"
+                    + "<p><strong>Dirección de Envío:</strong> %s</p>"
+                    + "<h3>Productos Comprados:</h3>"
+                    + "<table>"
+                    + "<thead>"
+                    + "<tr>"
+                    + "<th>Producto</th>"
+                    + "<th>Cantidad</th>"
+                    + "<th>Precio</th>"
+                    + "</tr>"
+                    + "</thead>"
+                    + "<tbody>"
+                    + "%s"
+                    + "</tbody>"
+                    + "</table>"
+                    + "<p class='footer'>Gracias por confiar en nosotros.</p>"
+                    + "</div>"
+                    + "</body>"
+                    + "</html>",
+                    user.getFirstName(),
+                    totalAmount.toString(),
+                    formattedDate,
+                    shippingAddress,
+                    productDetails.toString()
+            );
+
+            try {
+                emailService.sendEmail(email, subject, body);
+            } catch (MessagingException e) {
+                session.setAttribute("Error", "No se pudo enviar el correo de confirmación");
+            }
         }
 
         // Remover el pedido del carrito
